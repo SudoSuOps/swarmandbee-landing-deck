@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 10 Datasets AI Labs Can't Get — Market Intelligence | Swarm & Bee</title>
+<meta name="description" content="Expert reasoning datasets are the scarcest and most valuable training data in AI. Zero CRE datasets exist on HuggingFace. We have 1.86M verified pairs. Here's the market reality.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --max-w:1080px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em;line-height:1.2}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:99;height:56px;background:rgba(5,5,5,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--heading);font-weight:700;font-size:1.1rem;letter-spacing:-0.03em}
+.logo span{color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:0.85rem;font-weight:500}
+.nav-links a{color:var(--text-2);transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#050505!important;padding:7px 16px;border-radius:var(--radius);font-weight:600;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+
+/* FOOTER */
+footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center;font-size:0.8rem;color:var(--text-3)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+footer .footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px;flex-wrap:wrap}
+footer a{color:var(--text-3);transition:color 0.2s}
+footer a:hover{color:var(--primary)}
+footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
+
+/* SECTIONS */
+section{padding:100px 24px}
+.section-inner{max-width:var(--max-w);margin:0 auto}
+.section-label{font-family:var(--mono);font-size:0.75rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
+
+/* HERO */
+.hero{padding-top:160px;padding-bottom:100px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:20px}
+.hero h1 span{color:var(--primary)}
+.hero p{font-size:1.1rem;color:var(--text-2);max-width:720px;margin:0 auto;line-height:1.7}
+
+/* BLOCKQUOTES */
+.quote-block{margin-bottom:32px;padding:24px 28px;border-left:3px solid var(--primary);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0}
+.quote-block p{font-style:italic;font-size:1.05rem;color:var(--text);line-height:1.7;margin-bottom:8px}
+.quote-block .attribution{font-style:normal;font-size:0.85rem;color:var(--text-3)}
+
+/* STATS BAR */
+.stats-bar{display:flex;gap:1px;margin-top:48px;background:var(--border);border-radius:var(--radius);overflow:hidden}
+.stats-bar .stat{flex:1;background:var(--surface);padding:20px 16px;text-align:center}
+.stats-bar .stat .num{font-family:var(--mono);font-size:0.95rem;color:var(--primary);font-weight:500;margin-bottom:4px}
+.stats-bar .stat .label{font-size:0.75rem;color:var(--text-3)}
+
+/* SCARCITY LIST */
+.scarcity-item{padding:28px 0;border-bottom:1px solid var(--border)}
+.scarcity-item:first-child{border-top:1px solid var(--border)}
+.scarcity-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+.scarcity-num{font-family:var(--mono);font-size:0.85rem;color:var(--primary);min-width:28px;padding-top:2px}
+.scarcity-title{font-family:var(--heading);font-weight:600;font-size:1.05rem}
+.scarcity-desc{color:var(--text-2);font-size:0.9rem;margin-left:44px;margin-bottom:10px}
+.scarcity-tag{margin-left:44px;display:inline-block;font-family:var(--mono);font-size:0.72rem;padding:4px 10px;border-radius:4px;font-weight:500}
+.tag-have{background:rgba(245,158,11,0.12);color:var(--primary);border:1px solid rgba(245,158,11,0.25)}
+.tag-building{background:rgba(245,158,11,0.06);color:var(--primary-dim);border:1px solid rgba(245,158,11,0.12)}
+.tag-future{background:var(--surface-2);color:var(--text-3);border:1px solid var(--border)}
+.summary-line{margin-top:40px;padding:24px;background:var(--surface);border-radius:var(--radius);font-size:0.95rem;color:var(--text-2);line-height:1.7;border:1px solid var(--border)}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:24px 0}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+th{font-family:var(--heading);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border)}
+td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+tr:hover td{background:var(--surface)}
+td:first-child{color:var(--text)}
+.mono{font-family:var(--mono);font-size:0.85rem}
+
+/* CALLOUT BOX */
+.callout{margin-top:32px;padding:28px;background:var(--surface);border:1px solid var(--primary-dim);border-radius:var(--radius)}
+.callout p{font-size:0.95rem;color:var(--text-2);line-height:1.7}
+.callout .highlight{color:var(--primary);font-family:var(--mono);font-weight:500}
+
+/* PROOF CARDS */
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:32px}
+.proof-card{padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.proof-card h4{font-size:1rem;margin-bottom:10px}
+.proof-card p{font-size:0.88rem;color:var(--text-2);line-height:1.6}
+.proof-card .stat-highlight{font-family:var(--mono);color:var(--primary);font-size:0.85rem;margin-top:8px}
+
+/* REGULATION */
+.reg-item{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px}
+.reg-item h4{margin-bottom:8px}
+.reg-item .date{font-family:var(--mono);font-size:0.82rem;color:var(--primary);margin-bottom:6px}
+.reg-item p{font-size:0.88rem;color:var(--text-2)}
+
+/* CTA */
+.cta-section{text-align:center;padding:120px 24px}
+.cta-section h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px}
+.cta-section p{color:var(--text-2);font-size:1rem;margin-bottom:36px}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:var(--heading);font-weight:600;font-size:0.9rem;transition:all 0.2s}
+.btn-primary{background:var(--primary);color:#050505}
+.btn-primary:hover{background:var(--accent)}
+.btn-secondary{border:1px solid var(--border);color:var(--text-2)}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+
+/* SECTION TITLES */
+.section-inner > h2{font-size:clamp(1.5rem,3.5vw,2rem);margin-bottom:16px}
+.section-inner > .subtitle{color:var(--text-2);font-size:0.95rem;margin-bottom:40px;max-width:700px;line-height:1.7}
+
+/* HF GAP TABLE */
+.gap-table td.monopoly{color:var(--primary);font-weight:600}
+.gap-table td.leader{color:var(--accent);font-weight:500}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .menu-toggle{display:block}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--bg);padding:24px;gap:16px;overflow-y:auto}
+  .nav-links.open .nav-cta{width:100%;text-align:center}
+  section{padding:72px 16px}
+  .hero{padding-top:120px;padding-bottom:72px}
+  .stats-bar{flex-direction:column}
+  .proof-grid{grid-template-columns:1fr}
+  table{font-size:0.8rem}
+  th,td{padding:10px 12px}
+  .cta-buttons{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">swarm<span>&amp;</span>bee</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand" class="active">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="/pricing" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-inner">
+    <h1>The <span>10</span> Datasets AI Labs Can't Get</h1>
+    <p>The internet is tapped out. The next AI breakthroughs depend on expert-generated datasets that barely exist. Here's where the scarcity is &mdash; and where we've already filled it.</p>
+  </div>
+</section>
+
+<!-- THE DATA WALL -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">The Data Wall</div>
+    <h2>The Leaders Know</h2>
+    <p class="subtitle">The people building frontier AI have been saying the same thing: the easy data is gone.</p>
+
+    <div class="quote-block">
+      <p>"Data is the fossil fuel of AI. We have but one internet. We've achieved peak data."</p>
+      <div class="attribution">&mdash; Ilya Sutskever, NeurIPS 2024</div>
+    </div>
+
+    <div class="quote-block">
+      <p>"There is diminishing return in how much better they get with more data. It's saturating."</p>
+      <div class="attribution">&mdash; Yann LeCun, Meta AI</div>
+    </div>
+
+    <div class="quote-block">
+      <p>"The biggest shift will be to data-centric AI."</p>
+      <div class="attribution">&mdash; Andrew Ng, Stanford</div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Pre-training, as we know it, will unquestionably end... the data is not growing."</p>
+      <div class="attribution">&mdash; Ilya Sutskever</div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="num">~300T tokens</div>
+        <div class="label">Quality public text</div>
+      </div>
+      <div class="stat">
+        <div class="num">2026-2028</div>
+        <div class="label">Exhaustion window</div>
+      </div>
+      <div class="stat">
+        <div class="num">96%</div>
+        <div class="label">Lack sufficient data</div>
+      </div>
+      <div class="stat">
+        <div class="num">Nature 2024</div>
+        <div class="label">Model collapse kills synthetic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE 10 SCARCEST DATASETS -->
+<section style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">Scarcity Index</div>
+    <h2>The 10 Scarcest Datasets in AI</h2>
+    <p class="subtitle">Ranked by demand, scarcity, and willingness to pay. Tagged with our coverage.</p>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">01</span>
+        <span class="scarcity-title">Expert Reasoning Datasets</span>
+      </div>
+      <div class="scarcity-desc">Step-by-step professional decisions. Investment memos, diagnosis chains, design reviews. Experts are expensive, reasoning isn't recorded.</div>
+      <span class="scarcity-tag tag-have">WE HAVE THIS &mdash; 893K CRE + 45K capital markets</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">02</span>
+        <span class="scarcity-title">Medical Clinical Decision Data</span>
+      </div>
+      <div class="scarcity-desc">Real diagnosis reasoning, treatment trees, drug interactions. HIPAA blocks sharing.</div>
+      <span class="scarcity-tag tag-have">WE HAVE THIS &mdash; 432K pairs, 85+ specialties</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">03</span>
+        <span class="scarcity-title">Financial Decision Datasets</span>
+      </div>
+      <div class="scarcity-desc">IC notes, credit underwriting, hedge fund research. Proprietary and guarded.</div>
+      <span class="scarcity-tag tag-have">WE HAVE THIS &mdash; Capital markets, CMBS, rate advisory</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">04</span>
+        <span class="scarcity-title">Agent Tool-Use Logs</span>
+      </div>
+      <div class="scarcity-desc">Goal, reasoning, tool call, result, correction. Future of autonomous AI training.</div>
+      <span class="scarcity-tag tag-building">BUILDING &mdash; Signal worker traces, 28 skill logs</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">05</span>
+        <span class="scarcity-title">Evaluation &amp; Benchmark Datasets</span>
+      </div>
+      <div class="scarcity-desc">Domain-specific model testing. Extremely scarce.</div>
+      <span class="scarcity-tag tag-have">WE HAVE THIS &mdash; 6 gates + CoVe scoring pipeline</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">06</span>
+        <span class="scarcity-title">Enterprise Workflow Data</span>
+      </div>
+      <div class="scarcity-desc">IT tickets, CRM, procurement. Locked inside companies.</div>
+      <span class="scarcity-tag tag-future">Future opportunity</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">07</span>
+        <span class="scarcity-title">Scientific Discovery Data</span>
+      </div>
+      <div class="scarcity-desc">Experiment logs, research reasoning.</div>
+      <span class="scarcity-tag tag-building">BUILDING &mdash; OpenAlex cook active</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">08</span>
+        <span class="scarcity-title">Multimodal Business Intelligence</span>
+      </div>
+      <div class="scarcity-desc">Charts, spreadsheets, documents + analysis.</div>
+      <span class="scarcity-tag tag-future">Future opportunity</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">09</span>
+        <span class="scarcity-title">Real-World Robotics Data</span>
+      </div>
+      <div class="scarcity-desc">Factory, warehouse interactions. Expensive to collect.</div>
+      <span class="scarcity-tag tag-future">Different vertical</span>
+    </div>
+
+    <div class="scarcity-item">
+      <div class="scarcity-header">
+        <span class="scarcity-num">10</span>
+        <span class="scarcity-title">Longitudinal Behavior Data</span>
+      </div>
+      <div class="scarcity-desc">Work logs, learning progress. Hard to collect ethically.</div>
+      <span class="scarcity-tag tag-future">Different vertical</span>
+    </div>
+
+    <div class="summary-line">
+      We fill <strong>5 of the top 10</strong>. We're building 2 more. The verticals with the least data have the highest willingness to pay.
+    </div>
+  </div>
+</section>
+
+<!-- THE PRICING REALITY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Pricing Reality</div>
+    <h2>What Expert Data Actually Costs</h2>
+    <p class="subtitle">There are four tiers of training data. We sell the top two at the price of the bottom.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>Example</th><th>Market Value</th><th>Swarm Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Commodity</td><td>Common Crawl, web scrapes</td><td class="mono">Free</td><td class="mono">&mdash;</td></tr>
+          <tr><td>Specialized</td><td>Instruction tuning (Alpaca, ShareGPT)</td><td class="mono">$1K-$50K</td><td class="mono">&mdash;</td></tr>
+          <tr><td>Domain Expert</td><td>Curated vertical reasoning</td><td class="mono">$50K-$500K</td><td class="mono">$20-$299/mo</td></tr>
+          <tr><td>Exclusive</td><td>Proprietary expert datasets</td><td class="mono">$500K-$10M+</td><td class="mono">$20-$299/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>To build our CRE dataset internally: <span class="highlight">$150/hr broker x 30min/pair x 893K pairs = $446M replacement cost</span>. Our price: <span class="highlight">$299/month unlimited</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE LICENSING GOLD RUSH -->
+<section style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">Licensing Gold Rush</div>
+    <h2>What Others Are Selling</h2>
+    <p class="subtitle">Landmark data licensing deals that set the market.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Deal</th><th>Value</th><th>What Was Sold</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Meta &rarr; Scale AI</td><td class="mono">$14.8B (49% stake)</td><td>Training data infrastructure</td></tr>
+          <tr><td>News Corp &rarr; OpenAI</td><td class="mono">$250M+ (5 years)</td><td>News text</td></tr>
+          <tr><td>Reddit &rarr; Google</td><td class="mono">$60M/year</td><td>Forum discussions</td></tr>
+          <tr><td>Shutterstock &rarr; OpenAI</td><td class="mono">$104M (expanding)</td><td>Image-text pairs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>Reddit sold forum posts for <span class="highlight">$60M/year</span>. We sell expert CRE reasoning &mdash; the data that doesn't exist anywhere else.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE HUGGINGFACE GAP -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">The Gap</div>
+    <h2>The HuggingFace Gap</h2>
+    <p class="subtitle">What's available publicly versus what we've built.</p>
+
+    <div class="table-wrap">
+      <table class="gap-table">
+        <thead>
+          <tr><th>Vertical</th><th>On HuggingFace</th><th>Quality</th><th>Swarm &amp; Bee</th><th>Position</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Commercial Real Estate</td><td>~0 professional</td><td>None</td><td class="mono">893,348 pairs</td><td class="monopoly">Monopoly</td></tr>
+          <tr><td>Capital Markets Deals</td><td class="mono">0</td><td>None</td><td class="mono">45,039 pairs</td><td class="monopoly">Monopoly</td></tr>
+          <tr><td>Aviation Operations</td><td>~20 total</td><td>Mostly images</td><td class="mono">60,458 pairs</td><td class="leader">Category leader</td></tr>
+          <tr><td>Medical (deep SFT)</td><td>~1,700 (shallow)</td><td>Small MCQ sets</td><td class="mono">864,011 pairs</td><td>Top 1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY BEATS SCALE -->
+<section style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">Proof</div>
+    <h2>Quality Beats Scale</h2>
+    <p class="subtitle">The research is clear: curated data wins.</p>
+
+    <div class="proof-grid">
+      <div class="proof-card">
+        <h4>Phi (Microsoft)</h4>
+        <p>1.3B params, 7B curated tokens, beat models trained on 700B tokens.</p>
+        <div class="stat-highlight">100x less data</div>
+      </div>
+      <div class="proof-card">
+        <h4>LIMA (Meta)</h4>
+        <p>1,000 curated pairs beat GPT-4 in 43% of comparisons.</p>
+        <div class="stat-highlight">1,000 pairs</div>
+      </div>
+      <div class="proof-card">
+        <h4>SwarmAtlas-27B</h4>
+        <p>45K pairs, 0.4186 loss, 12/12 math on a live deal. The data works.</p>
+        <div class="stat-highlight">45K pairs, production-grade</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGULATORY URGENCY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Regulatory Urgency</div>
+    <h2>The Compliance Clock Is Ticking</h2>
+    <p class="subtitle">New regulation demands full data provenance. Most labs aren't ready.</p>
+
+    <div class="reg-item">
+      <div class="date">August 2, 2026</div>
+      <h4>EU AI Act</h4>
+      <p>Must document all training data sources. Penalties: EUR 35M or 7% of global turnover.</p>
+    </div>
+
+    <div class="reg-item">
+      <div class="date">January 1, 2026</div>
+      <h4>California AB 2013</h4>
+      <p>Must disclose training data information.</p>
+    </div>
+
+    <div class="callout" style="margin-top:32px">
+      <p>Every Swarm pair has a source chain, quality scores, and a <span class="highlight">Hedera provenance seal</span>. Compliance-ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" style="background:var(--surface)">
+  <div class="section-inner">
+    <h2>The scarcity is real. The data exists.</h2>
+    <p>Start now.</p>
+    <div class="cta-buttons">
+      <a href="/datasets" class="btn btn-primary">Browse Datasets &rarr;</a>
+      <a href="/pricing" class="btn btn-secondary">See Pricing &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/SudoSuOps" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div style="margin-top:16px;font-size:0.82rem">
+      <a href="mailto:build@swarmandbee.com" style="color:var(--primary)">build@swarmandbee.com</a>
+    </div>
+    <div class="copyright">&copy; 2026 Swarm &amp; Bee Intelligence</div>
+  </div>
+</footer>
+
+</body>
+</html>

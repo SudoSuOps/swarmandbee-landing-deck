@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataset Catalog — 1.86M Expert Reasoning Pairs | Swarm & Bee</title>
+<meta name="description" content="Browse 1.86 million verified training pairs across CRE, medical, aviation, capital markets, and signal intelligence. 6 quality gates, CoVe verification, Hedera provenance. JSONL format. From $20/mo.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --max-w:1080px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:600;line-height:1.25}
+a{color:var(--primary);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,5,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--heading);font-size:1.2rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.logo span{color:var(--primary);margin:0 1px}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:.88rem}
+.nav-links a{color:var(--text-2);font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#050505!important;padding:6px 18px;border-radius:6px;font-weight:600;font-size:.84rem}
+.nav-cta:hover{background:var(--accent)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer}
+
+@media(max-width:720px){
+  .nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(5,5,5,.96);padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .menu-toggle{display:block}
+}
+
+/* HEADER */
+.page-header{padding:120px 0 48px;text-align:center}
+.page-header h1{font-size:2.6rem;margin-bottom:16px;letter-spacing:-.03em}
+.page-header .subtitle{color:var(--text-2);font-size:1.05rem;max-width:680px;margin:0 auto;line-height:1.7}
+
+/* STAT BAR */
+.stat-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;margin-bottom:64px;text-align:center}
+.stat-bar-inner{font-family:var(--mono);font-size:.88rem;color:var(--text-2);letter-spacing:.02em}
+.stat-bar-inner span.sep{color:var(--text-3);margin:0 14px}
+.stat-bar-inner .num{color:var(--primary);font-weight:500}
+
+/* VERTICAL SECTION */
+.vertical{margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid var(--border)}
+.vertical:last-of-type{border-bottom:none}
+.vertical-header{display:flex;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.vertical-header h2{font-size:1.6rem;letter-spacing:-.02em}
+.vertical-header .pair-count{font-family:var(--mono);font-size:1rem;color:var(--primary);font-weight:500}
+.vertical p.desc{color:var(--text-2);font-size:.95rem;margin-bottom:20px;max-width:800px;line-height:1.75}
+.vertical .label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);font-weight:600;margin-bottom:8px}
+.specialties{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+.specialties .tag{background:var(--surface-2);border:1px solid var(--border);padding:4px 10px;border-radius:4px;font-size:.78rem;color:var(--text-2);font-family:var(--mono)}
+.specialties .tag.more{color:var(--text-3);font-style:italic;border-color:transparent;background:none}
+
+/* CODE BLOCK */
+.code-block{background:#0a0a0a;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;overflow-x:auto;margin-bottom:20px;position:relative}
+.code-block code{font-family:var(--mono);font-size:.8rem;line-height:1.7;color:var(--text-2);white-space:pre}
+.code-block .key{color:#f59e0b}
+.code-block .str{color:#a0a0a0}
+.code-block .punct{color:#5a5a5a}
+
+.vertical-links{display:flex;gap:20px;flex-wrap:wrap}
+.vertical-links a{font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:4px}
+
+/* QUALITY PIPELINE */
+.pipeline-section{margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid var(--border)}
+.pipeline-section h2{font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.pipeline-section>p{color:var(--text-2);font-size:.95rem;margin-bottom:32px;max-width:800px;line-height:1.75}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px}
+.gate{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.gate .gate-num{font-family:var(--mono);font-size:.72rem;color:var(--primary);margin-bottom:6px;letter-spacing:.04em}
+.gate h4{font-size:.95rem;margin-bottom:6px}
+.gate p{font-size:.82rem;color:var(--text-2);line-height:1.6}
+.pipeline-extra{margin-bottom:24px}
+.pipeline-extra h3{font-size:1.05rem;margin-bottom:8px}
+.pipeline-extra p{color:var(--text-2);font-size:.9rem;line-height:1.7;max-width:800px}
+@media(max-width:720px){
+  .gates{grid-template-columns:1fr}
+}
+
+/* FORMAT & DELIVERY */
+.format-section{margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid var(--border)}
+.format-section h2{font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.format-section>p{color:var(--text-2);font-size:.95rem;margin-bottom:28px;max-width:800px;line-height:1.75}
+
+/* CTA */
+.cta-section{text-align:center;padding:48px 0 96px}
+.cta-section p{color:var(--text-2);font-size:1.05rem;margin-bottom:28px}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.cta-buttons a.btn-primary{background:var(--primary);color:#050505;padding:12px 28px;border-radius:6px;font-weight:600;font-size:.95rem}
+.cta-buttons a.btn-primary:hover{background:var(--accent)}
+.cta-buttons a.btn-secondary{border:1px solid var(--border);color:var(--text);padding:12px 28px;border-radius:6px;font-weight:500;font-size:.95rem}
+.cta-buttons a.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:.85rem}
+.footer-links a{color:var(--text-2)}
+.footer-links a:hover{color:var(--primary)}
+.copyright{margin-top:20px;font-size:.78rem;color:var(--text-3)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">swarm<span>&amp;</span>bee</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/datasets" class="active">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="/pricing" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- HEADER -->
+<section class="page-header">
+  <div class="container">
+    <h1>Dataset Catalog</h1>
+    <p class="subtitle">1.86 million expert reasoning pairs across 5 verticals. Every pair passes 6 quality gates and CoVe verification. JSONL format, ready for any SFT pipeline.</p>
+  </div>
+</section>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="container">
+    <div class="stat-bar-inner">
+      <span class="num">1,859,665</span> total pairs<span class="sep">|</span><span class="num">5</span> verticals<span class="sep">|</span><span class="num">330+</span> specialties<span class="sep">|</span><span class="num">8</span> Zenodo DOIs<span class="sep">|</span>Hedera sealed
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- CRE -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>CRE Intelligence Objects</h2>
+    <span class="pair-count">893,348 pairs</span>
+  </div>
+  <p class="desc">The only curated commercial real estate training dataset available. Underwriting calculations, IC memos, lease reasoning, cap rate analysis, capital markets, tenant evaluation, and 35 more specialties across all property types.</p>
+  <div class="label">Top Specialties</div>
+  <div class="specialties">
+    <span class="tag">underwriting</span>
+    <span class="tag">cap-rates</span>
+    <span class="tag">capital-markets</span>
+    <span class="tag">lease-terms</span>
+    <span class="tag">tenant-analysis</span>
+    <span class="tag">debt-structuring</span>
+    <span class="tag">equity-advisory</span>
+    <span class="tag">CMBS-distress</span>
+    <span class="tag">rate-advisory</span>
+    <span class="tag">deal-origination</span>
+    <span class="tag">valuation</span>
+    <span class="tag">IC-memo</span>
+    <span class="tag">lease-reasoning</span>
+    <span class="tag">cold-storage</span>
+    <span class="tag">supply-chain-logistics</span>
+    <span class="tag">industrial-STNL</span>
+    <span class="tag">sale-leaseback</span>
+    <span class="tag">1031-exchange</span>
+    <span class="tag">NOI-analysis</span>
+    <span class="tag">market-comps</span>
+    <span class="tag more">and 21 more</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"A 120,000 SF industrial warehouse in Memphis is listed at $14.4M with a 6.2% cap rate. The tenant is a 3PL operator on a 12-year absolute NNN lease with 2.5% annual escalations. Underwrite this deal."</span><span class="punct">,</span>
+  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Current NOI: $14,400,000 x 0.062 = $892,800. Year-1 rent: $892,800 / 120,000 = $7.44/SF..."</span><span class="punct">,</span>
+  <span class="key">"task_type"</span><span class="punct">:</span> <span class="str">"underwriting_calc"</span><span class="punct">,</span>
+  <span class="key">"difficulty"</span><span class="punct">:</span> <span class="str">"medium"</span><span class="punct">,</span>
+  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="https://huggingface.co/datasets/SwarmandBee/cre-intelligence-objects" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
+    <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- MEDICAL -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Medical Intelligence</h2>
+    <span class="pair-count">432,196 pairs</span>
+  </div>
+  <p class="desc">85+ medical specialties from internal medicine to neurosurgery. Clinical reasoning, diagnosis chains, treatment protocols, drug interactions, and pharmacology trajectories.</p>
+  <div class="label">Top Specialties</div>
+  <div class="specialties">
+    <span class="tag">internal-medicine (99K)</span>
+    <span class="tag">surgery (43K)</span>
+    <span class="tag">neurology (39K)</span>
+    <span class="tag">obstetrics (27K)</span>
+    <span class="tag">pharmacology (23K)</span>
+    <span class="tag">cardiology</span>
+    <span class="tag">pulmonology</span>
+    <span class="tag">nephrology</span>
+    <span class="tag">endocrinology</span>
+    <span class="tag">rheumatology</span>
+    <span class="tag">gastroenterology</span>
+    <span class="tag">hematology</span>
+    <span class="tag">oncology</span>
+    <span class="tag">dermatology</span>
+    <span class="tag">ophthalmology</span>
+    <span class="tag more">and 70+ more</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"A 58-year-old male presents with acute onset chest pain radiating to the left arm, diaphoresis, and ST-elevation in leads II, III, and aVF. Troponin is elevated. Diagnosis and management?"</span><span class="punct">,</span>
+  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Acute inferior STEMI. Immediate management: dual antiplatelet therapy, heparin, emergent PCI within 90 minutes..."</span><span class="punct">,</span>
+  <span class="key">"specialty"</span><span class="punct">:</span> <span class="str">"cardiology"</span><span class="punct">,</span>
+  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="https://huggingface.co/datasets/SwarmandBee/medical-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
+    <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- CAPITAL MARKETS -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Capital Markets Intelligence</h2>
+    <span class="pair-count">45,039 pairs</span>
+  </div>
+  <p class="desc">The dataset that trained SwarmAtlas-27B. 8 cook streams covering CMBS distress, debt maturity, rate advisory, equity advisory, valuation, deal origination, macro causality, and deal graphs. 103.7M tokens.</p>
+  <div class="label">Cook Streams</div>
+  <div class="specialties">
+    <span class="tag">Debt Maturity</span>
+    <span class="tag">CMBS Distress</span>
+    <span class="tag">Rate Advisory</span>
+    <span class="tag">Equity Advisory</span>
+    <span class="tag">Valuation</span>
+    <span class="tag">Deal Origination</span>
+    <span class="tag">Macro Causality</span>
+    <span class="tag">Deal Graph</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"A $42M CMBS loan on a 280,000 SF suburban office matures in 14 months. Current occupancy is 62%, down from 89% at origination. Coupon 6.8%, last appraised at $38M. Analyze refinancing risk."</span><span class="punct">,</span>
+  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Current LTV: $42M / $38M = 110.5% (underwater). With 62% occupancy, stabilized NOI is insufficient..."</span><span class="punct">,</span>
+  <span class="key">"task_type"</span><span class="punct">:</span> <span class="str">"cmbs_distress"</span><span class="punct">,</span>
+  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="https://huggingface.co/datasets/SwarmandBee/capital-markets-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
+    <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- AVIATION -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Aviation Intelligence</h2>
+    <span class="pair-count">60,458 pairs</span>
+  </div>
+  <p class="desc">157 specialties spanning the full aviation domain. Flight operations, maintenance, safety management, ATC, regulations (FAA/EASA/ICAO), MRO, engine technology, and 150 more.</p>
+  <div class="label">Top Specialties</div>
+  <div class="specialties">
+    <span class="tag">aerodynamics</span>
+    <span class="tag">air-traffic-control</span>
+    <span class="tag">aircraft-maintenance</span>
+    <span class="tag">avionics</span>
+    <span class="tag">crew-resource-management</span>
+    <span class="tag">emergency-procedures</span>
+    <span class="tag">flight-dynamics</span>
+    <span class="tag">flight-planning</span>
+    <span class="tag">human-factors</span>
+    <span class="tag">IFR-procedures</span>
+    <span class="tag">navigation</span>
+    <span class="tag">Part-121</span>
+    <span class="tag">safety-management-systems</span>
+    <span class="tag">turbine-engines</span>
+    <span class="tag">UAS-operations</span>
+    <span class="tag">weather-analysis</span>
+    <span class="tag more">and 141 more</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"During pre-flight inspection of a 737-800, you discover a 4-inch disbond on the upper wing skin at Station 480. Aircraft has 32,000 cycles. Assessment?"</span><span class="punct">,</span>
+  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"A 4-inch disbond at Station 480 on a high-cycle 737-800 requires immediate evaluation per Boeing SRM 51-70-11..."</span><span class="punct">,</span>
+  <span class="key">"specialty"</span><span class="punct">:</span> <span class="str">"aircraft-maintenance"</span><span class="punct">,</span>
+  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="https://huggingface.co/datasets/SwarmandBee/aviation-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
+    <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- SIGNAL -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Signal Intelligence</h2>
+    <span class="pair-count">28,624 pairs</span>
+  </div>
+  <p class="desc">Market signals from 12 real-time source workers. FRED economic data, SEC EDGAR filings, academic research, CRE news, macro indicators. The context layer that makes domain intelligence actionable.</p>
+  <div class="label">Source Workers</div>
+  <div class="specialties">
+    <span class="tag">FRED</span>
+    <span class="tag">EDGAR</span>
+    <span class="tag">RSS</span>
+    <span class="tag">OpenAlex</span>
+    <span class="tag">arXiv</span>
+    <span class="tag">Hacker News</span>
+    <span class="tag">Reddit</span>
+    <span class="tag">CRE News</span>
+    <span class="tag">Yahoo Finance</span>
+    <span class="tag">Treasury</span>
+    <span class="tag">BLS</span>
+    <span class="tag">Census</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"10Y Treasury rose 18bps to 4.52% after CPI 3.4% YoY. 2s10s spread inverted to -42bps. Implications for CRE cap rates and transaction volume?"</span><span class="punct">,</span>
+  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Rising long rates and deeper inversion signal tightening financial conditions impacting CRE. Cap rate expansion likely..."</span><span class="punct">,</span>
+  <span class="key">"specialty"</span><span class="punct">:</span> <span class="str">"macro-signal"</span><span class="punct">,</span>
+  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="https://huggingface.co/datasets/SwarmandBee/signal-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
+    <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- QUALITY PIPELINE -->
+<section class="pipeline-section">
+  <h2>Quality Pipeline</h2>
+  <p>Every pair passes 6 deterministic quality gates before earning platinum status. No LLM judges -- deterministic code that can't be gamed.</p>
+  <div class="gates">
+    <div class="gate">
+      <div class="gate-num">GATE 1</div>
+      <h4>Schema Gate</h4>
+      <p>Valid JSONL, required fields present</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">GATE 2</div>
+      <h4>Length Gate</h4>
+      <p>Answer meets minimum depth threshold</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">GATE 3</div>
+      <h4>Duplication Gate</h4>
+      <p>MD5 fingerprint dedup across all shards</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">GATE 4</div>
+      <h4>Specialty Gate</h4>
+      <p>Verified against domain taxonomy</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">GATE 5</div>
+      <h4>Coherence Gate</h4>
+      <p>Question-answer alignment scoring</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">GATE 6</div>
+      <h4>Toxicity Gate</h4>
+      <p>Safety and compliance filter</p>
+    </div>
+  </div>
+  <div class="pipeline-extra" style="margin-bottom:28px">
+    <h3>Chain of Verification</h3>
+    <p>Pairs that pass all gates enter Chain of Verification -- Llama-70B rewrites for clarity, Qwen-235B scores on 5 criteria. Minimum 20/25 to earn platinum.</p>
+  </div>
+  <div class="pipeline-extra">
+    <h3>Hedera Provenance</h3>
+    <p>Every batch is Merkle-hashed and published to Hedera Consensus Service. Immutable provenance. EU AI Act ready.</p>
+  </div>
+</section>
+
+<!-- FORMAT & DELIVERY -->
+<section class="format-section">
+  <h2>Format &amp; Delivery</h2>
+  <p>All datasets delivered as JSONL -- plug directly into any SFT pipeline. Compatible with Unsloth, TRL, Axolotl, LLaMA-Factory, or any trainer that reads JSONL.</p>
+  <div class="label">API Access</div>
+  <div class="code-block"><code>curl -H "Authorization: Bearer YOUR_API_KEY" \
+     https://api.swarmandbee.ai/api/data/pull?dataset=cre-intelligence-objects&amp;limit=100</code></div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p>Start with free samples on HuggingFace. Subscribe for full API access.</p>
+  <div class="cta-buttons">
+    <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer" class="btn-primary">Free Samples on HuggingFace &rarr;</a>
+    <a href="/pricing" class="btn-secondary">See Pricing &rarr;</a>
+  </div>
+</section>
+
+</div><!-- .container -->
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/SudoSuOps" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div style="margin-top:16px;font-size:0.82rem">
+      <a href="mailto:build@swarmandbee.com" style="color:var(--primary)">build@swarmandbee.com</a>
+    </div>
+    <div class="copyright">&copy; 2026 Swarm &amp; Bee Intelligence</div>
+  </div>
+</footer>
+
+</body>
+</html>

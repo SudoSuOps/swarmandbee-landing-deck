@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing — Training Data from $20/month | Swarm & Bee</title>
+<meta name="description" content="Access 1.86M verified training pairs across CRE, medical, aviation, and capital markets. Explorer $20/mo, Builder $99/mo, Fleet $299/mo. Free samples available.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --max-w:1080px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em;line-height:1.2}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:99;height:56px;background:rgba(5,5,5,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--heading);font-weight:700;font-size:1.1rem;letter-spacing:-0.03em}
+.logo span{color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:0.85rem;font-weight:500}
+.nav-links a{color:var(--text-2);transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#050505!important;padding:7px 16px;border-radius:var(--radius);font-weight:600;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+
+/* FOOTER */
+footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center;font-size:0.8rem;color:var(--text-3)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+footer .footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px;flex-wrap:wrap}
+footer a{color:var(--text-3);transition:color 0.2s}
+footer a:hover{color:var(--primary)}
+footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
+
+/* SECTIONS */
+section{padding:100px 24px}
+.section-inner{max-width:var(--max-w);margin:0 auto}
+.section-label{font-family:var(--mono);font-size:0.75rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
+
+/* HERO */
+.hero{padding-top:160px;padding-bottom:80px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
+.hero p{font-size:1.1rem;color:var(--text-2);max-width:600px;margin:0 auto}
+
+/* PRICING GRID */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:0}
+.pricing-card{padding:36px 28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column}
+.pricing-card.featured{border-color:var(--primary);position:relative}
+.pricing-card.featured::before{content:'Most Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#050505;font-family:var(--heading);font-size:0.72rem;font-weight:600;padding:3px 14px;border-radius:20px;white-space:nowrap;text-transform:uppercase;letter-spacing:0.04em}
+.pricing-card h3{font-size:1.2rem;margin-bottom:4px}
+.pricing-card .price{font-family:var(--mono);font-size:2rem;font-weight:700;margin:16px 0 4px}
+.pricing-card .price span{font-size:0.85rem;font-weight:400;color:var(--text-3)}
+.pricing-card .billing{font-size:0.78rem;color:var(--text-3);margin-bottom:24px}
+.pricing-card ul{list-style:none;flex:1;margin-bottom:28px}
+.pricing-card ul li{font-size:0.88rem;color:var(--text-2);padding:8px 0;border-bottom:1px solid var(--border);padding-left:20px;position:relative}
+.pricing-card ul li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--primary-dim)}
+.pricing-card ul li:last-child{border-bottom:none}
+.pricing-card .btn{text-align:center;width:100%}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:var(--heading);font-weight:600;font-size:0.9rem;transition:all 0.2s}
+.btn-primary{background:var(--primary);color:#050505}
+.btn-primary:hover{background:var(--accent)}
+.btn-secondary{border:1px solid var(--border);color:var(--text-2)}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+.btn-outline{border:1px solid var(--border);color:var(--text-2)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+
+/* INCLUDED */
+.included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.included-item{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.included-item h4{font-size:0.92rem;margin-bottom:6px}
+.included-item p{font-size:0.82rem;color:var(--text-3);line-height:1.5}
+
+/* FREE TIER / INFERENCE / ENTERPRISE */
+.block-card{padding:36px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px}
+.block-card h3{font-size:1.15rem;margin-bottom:10px}
+.block-card p{font-size:0.92rem;color:var(--text-2);line-height:1.7;margin-bottom:16px}
+.block-card code{font-family:var(--mono);font-size:0.82rem;background:var(--surface-2);border:1px solid var(--border);padding:10px 16px;border-radius:var(--radius);display:block;color:var(--text-2);margin:12px 0 16px;overflow-x:auto}
+
+/* FAQ */
+.faq-item{padding:24px 0;border-bottom:1px solid var(--border)}
+.faq-item:first-child{border-top:1px solid var(--border)}
+.faq-q{font-family:var(--heading);font-weight:600;font-size:0.95rem;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.faq-q .toggle{font-size:1.2rem;color:var(--text-3);transition:transform 0.2s;flex-shrink:0}
+.faq-item.open .faq-q .toggle{transform:rotate(45deg)}
+.faq-a{font-size:0.88rem;color:var(--text-2);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease}
+.faq-item.open .faq-a{max-height:200px;padding-top:4px}
+
+/* SECTION TITLES */
+.section-inner > h2{font-size:clamp(1.5rem,3.5vw,2rem);margin-bottom:16px}
+.section-inner > .subtitle{color:var(--text-2);font-size:0.95rem;margin-bottom:40px;max-width:700px;line-height:1.7}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .menu-toggle{display:block}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--bg);padding:24px;gap:16px;overflow-y:auto}
+  .nav-links.open .nav-cta{width:100%;text-align:center}
+  section{padding:72px 16px}
+  .hero{padding-top:120px;padding-bottom:60px}
+  .pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+  .included-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">swarm<span>&amp;</span>bee</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing" class="active">Pricing</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="/pricing" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-inner">
+    <h1>Simple pricing</h1>
+    <p>Access verified training data from $20/month. No surprises.</p>
+  </div>
+</section>
+
+<!-- PRICING TIERS -->
+<section style="padding-top:0">
+  <div class="section-inner">
+    <div class="pricing-grid">
+
+      <!-- EXPLORER -->
+      <div class="pricing-card">
+        <h3>Explorer</h3>
+        <div class="price">$20 <span>/month</span></div>
+        <div class="billing">Billed monthly</div>
+        <ul>
+          <li>5,000 pairs/month</li>
+          <li>All 5 verticals</li>
+          <li>JSONL download</li>
+          <li>API access</li>
+          <li>Quality metadata included</li>
+        </ul>
+        <a href="mailto:build@swarmandbee.com?subject=Explorer%20Plan" class="btn btn-outline">Get Started &rarr;</a>
+      </div>
+
+      <!-- BUILDER -->
+      <div class="pricing-card featured">
+        <h3>Builder</h3>
+        <div class="price">$99 <span>/month</span></div>
+        <div class="billing">Billed monthly</div>
+        <ul>
+          <li>100,000 pairs/month</li>
+          <li>All 5 verticals</li>
+          <li>JSONL download</li>
+          <li>API access</li>
+          <li>Quality metadata included</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="mailto:build@swarmandbee.com?subject=Builder%20Plan" class="btn btn-primary">Get Started &rarr;</a>
+      </div>
+
+      <!-- FLEET -->
+      <div class="pricing-card">
+        <h3>Fleet</h3>
+        <div class="price">$299 <span>/month</span></div>
+        <div class="billing">Billed monthly</div>
+        <ul>
+          <li>Unlimited pairs</li>
+          <li>All 5 verticals</li>
+          <li>JSONL download</li>
+          <li>API access</li>
+          <li>Quality metadata included</li>
+          <li>Priority support</li>
+          <li>Custom vertical requests</li>
+        </ul>
+        <a href="mailto:build@swarmandbee.com?subject=Fleet%20Plan" class="btn btn-outline">Get Started &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">Every Plan Includes</div>
+    <h2>What's Included</h2>
+    <p class="subtitle">Everything you need to fine-tune production models.</p>
+
+    <div class="included-grid">
+      <div class="included-item">
+        <h4>JSONL Format</h4>
+        <p>Plug into any SFT pipeline. Compatible with Unsloth, Axolotl, TRL, and every major trainer.</p>
+      </div>
+      <div class="included-item">
+        <h4>Quality Metadata</h4>
+        <p>CoVe scores, fingerprints, and tier labels on every pair.</p>
+      </div>
+      <div class="included-item">
+        <h4>Provenance Data</h4>
+        <p>Hedera HCS seal references for full audit trail and EU AI Act compliance.</p>
+      </div>
+      <div class="included-item">
+        <h4>API Access</h4>
+        <p>RESTful, OpenAI-compatible endpoint for programmatic access.</p>
+      </div>
+      <div class="included-item">
+        <h4>5 Verticals</h4>
+        <p>CRE, Medical, Capital Markets, Aviation, and Signal intelligence data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE TIER -->
+<section>
+  <div class="section-inner">
+    <div class="block-card">
+      <div class="section-label">Free Sample</div>
+      <h3>Not ready to subscribe?</h3>
+      <p>Start with 1,000 free capital markets pairs on HuggingFace. No account required.</p>
+      <a href="https://huggingface.co/SwarmandBee/SwarmAtlas-27B" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Download Free Sample &rarr;</a>
+    </div>
+
+    <!-- INFERENCE API -->
+    <div class="block-card">
+      <div class="section-label">Inference API</div>
+      <h3>Need model access?</h3>
+      <p>SwarmAtlas-27B is available via OpenAI-compatible API.</p>
+      <code>POST https://api.swarmandbee.ai/v1/chat/completions</code>
+      <p>Inference is metered separately. Contact us for pricing.</p>
+      <a href="mailto:build@swarmandbee.com?subject=Inference%20API%20Pricing" class="btn btn-secondary">Contact Us &rarr;</a>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="block-card">
+      <div class="section-label">Enterprise</div>
+      <h3>Need a custom dataset build?</h3>
+      <p>Volume licensing, white-label, or custom vertical builds. Let's talk.</p>
+      <a href="mailto:build@swarmandbee.com?subject=Enterprise%20Inquiry" class="btn btn-primary">build@swarmandbee.com &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2>Common Questions</h2>
+    <p class="subtitle" style="margin-bottom:32px"></p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        What format is the data in?
+        <span class="toggle">+</span>
+      </div>
+      <div class="faq-a">JSONL with question/answer pairs, plus metadata (specialty, difficulty, quality_tier, fingerprint).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Can I use the data to train commercial models?
+        <span class="toggle">+</span>
+      </div>
+      <div class="faq-a">Yes. All datasets are licensed for commercial use.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        How is quality verified?
+        <span class="toggle">+</span>
+      </div>
+      <div class="faq-a">Every pair passes 6 deterministic gates + CoVe promotion (Llama-70B + Qwen-235B scoring).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Is the data EU AI Act compliant?
+        <span class="toggle">+</span>
+      </div>
+      <div class="faq-a">Yes. Full provenance chain, CoVe scores, and Hedera Consensus Service seals.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Can I request a specific vertical?
+        <span class="toggle">+</span>
+      </div>
+      <div class="faq-a">Yes, on Fleet plan. Email build@swarmandbee.com with your requirements.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/SudoSuOps" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div style="margin-top:16px;font-size:0.82rem">
+      <a href="mailto:build@swarmandbee.com" style="color:var(--primary)">build@swarmandbee.com</a>
+    </div>
+    <div class="copyright">&copy; 2026 Swarm &amp; Bee Intelligence</div>
+  </div>
+</footer>
+
+</body>
+</html>
