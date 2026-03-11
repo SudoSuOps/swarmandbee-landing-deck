@@ -1,0 +1,42 @@
+# Swarm & Bee Intelligence
+
+> Swarm & Bee builds expert reasoning datasets for AI fine-tuning. 1.86 million verified training pairs across commercial real estate (CRE), medical, aviation, capital markets, and signal intelligence. Every pair passes 6 deterministic quality gates, CoVe verification (Llama-70B + Qwen-235B scoring), and Hedera Consensus Service provenance sealing. Data is JSONL format, licensed for commercial use, EU AI Act compliant.
+
+Swarm & Bee is an industrial AI intelligence infrastructure company founded by Donovan Mackey, a 30-year CRE broker and Senior Managing Director at Marcus & Millichap with $8B in closed sales. The training data factory produces domain-expert reasoning that does not exist anywhere else — zero CRE training datasets exist on HuggingFace, zero institutional capital markets reasoning datasets exist publicly.
+
+The company operates a four-layer stack: Signal (real-time market intelligence from 11 sources) → Curate (multi-vertical curation with quality gates) → Verticals (domain-specific fine-tuned models) → Ledger (Hedera blockchain provenance).
+
+## Datasets
+
+- [Dataset Catalog](https://swarmandbee.ai/datasets): Browse all 1.86M training pairs across 6 verticals
+- [CRE Intelligence](https://swarmandbee.ai/datasets): 893,348 pairs — underwriting, IC memos, lease analysis, cap rates, CMBS, debt maturity
+- [Medical Intelligence](https://swarmandbee.ai/datasets): 864,011 pairs — 85+ specialties, pharmacology trajectories, clinical reasoning
+- [Aviation Intelligence](https://swarmandbee.ai/datasets): 60,458 pairs — 157 specialties, maintenance reasoning, regulatory compliance
+- [Capital Markets](https://swarmandbee.ai/datasets): 48,900 pairs — CMBS distress, rate advisory, equity structuring, deal origination
+- [Signal Intelligence](https://swarmandbee.ai/datasets): 31,600 pairs — market signals, news analysis, SEC filings, macro causality
+
+## Models
+
+- [SwarmAtlas-27B](https://swarmandbee.ai/atlas): Capital markets model trained on 45K pairs, 12/12 math accuracy on live CRE deals, loss 0.4186
+- [SwarmCurator-27B](https://swarmandbee.ai/atlas): General curation model, 62K pairs, loss 0.477
+- [SwarmCurator-9B](https://swarmandbee.ai/atlas): Edge-optimized curation model, 46K pairs, loss 0.707
+
+## Pricing
+
+- [Pricing Plans](https://swarmandbee.ai/pricing): Explorer $20/mo (10K pairs), Builder $99/mo (100K pairs), Fleet $299/mo (unlimited)
+
+## Market Intelligence
+
+- [Market Demand Analysis](https://swarmandbee.ai/demand): The 10 datasets AI labs cannot get — expert reasoning data scarcity analysis
+
+## API
+
+- API endpoint: api.swarmandbee.ai (OpenAI-compatible)
+- Router endpoint: router.swarmandbee.ai (28 CRE + medical skills)
+
+## Contact
+
+- Email: build@swarmandbee.com
+- Twitter/X: https://x.com/swarmandbee
+- HuggingFace: https://huggingface.co/SwarmandBee
+- GitHub: https://github.com/SudoSuOps

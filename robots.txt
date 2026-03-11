@@ -1,4 +1,75 @@
+# Swarm & Bee Intelligence — robots.txt
+# Updated: 2026-03-11
+
+# ═══════════════════════════════════════════
+# Default: allow all
+# ═══════════════════════════════════════════
 User-agent: *
 Allow: /
-
 Sitemap: https://swarmandbee.ai/sitemap.xml
+
+# ═══════════════════════════════════════════
+# AI SEARCH / RETRIEVAL CRAWLERS — ALLOWED
+# These power real-time AI search citations
+# ═══════════════════════════════════════════
+
+# OpenAI — ChatGPT search retrieval
+User-agent: ChatGPT-User
+Allow: /
+
+# OpenAI — search indexing
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic — Claude real-time page fetch
+User-agent: Claude-User
+Allow: /
+
+# Anthropic — Claude search quality
+User-agent: Claude-SearchBot
+Allow: /
+
+# Perplexity — search and citation
+User-agent: PerplexityBot
+Allow: /
+
+# Google — traditional + AI Overviews
+User-agent: Googlebot
+Allow: /
+
+# Bing — traditional + Copilot
+User-agent: Bingbot
+Allow: /
+
+# ═══════════════════════════════════════════
+# AI TRAINING CRAWLERS — BLOCKED
+# Protect content from model training
+# ═══════════════════════════════════════════
+
+# OpenAI — model training
+User-agent: GPTBot
+Disallow: /
+
+# Google — AI model training
+User-agent: Google-Extended
+Disallow: /
+
+# Anthropic — model training
+User-agent: ClaudeBot
+Disallow: /
+
+# Common Crawl — feeds many AI models
+User-agent: CCBot
+Disallow: /
+
+# Meta — AI model training
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# ByteDance — AI training
+User-agent: Bytespider
+Disallow: /
+
+# Apple — AI training
+User-agent: Applebot-Extended
+Disallow: /

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#050505"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#f59e0b"/>
+  <text x="100" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#e8e8e8" letter-spacing="-2">Swarm <tspan fill="#f59e0b">&amp;</tspan> Bee</text>
+  <text x="100" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="400" fill="#a0a0a0">Expert Reasoning Datasets for AI</text>
+  <text x="100" y="400" font-family="monospace" font-size="22" fill="#f59e0b">1,860,000+</text>
+  <text x="340" y="400" font-family="system-ui, sans-serif" font-size="22" fill="#5a5a5a">verified training pairs</text>
+  <text x="100" y="445" font-family="monospace" font-size="18" fill="#5a5a5a">CRE  ·  Medical  ·  Aviation  ·  Capital Markets  ·  Signal</text>
+  <text x="100" y="530" font-family="system-ui, sans-serif" font-size="18" fill="#5a5a5a">swarmandbee.ai</text>
+</svg>
