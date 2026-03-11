@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account — Swarm & Bee</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --green:#22c55e;--red:#ef4444;
+  --max-w:880px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em}
+a{color:var(--primary);text-decoration:none}
+a:hover{color:var(--accent)}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:99;height:56px;background:rgba(5,5,5,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px}
+.nav-inner{max-width:var(--max-w);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--heading);font-weight:700;font-size:1.1rem;letter-spacing:-0.03em}
+.logo span{color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:0.85rem;font-weight:500}
+.nav-links a{color:var(--text-2);transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#050505!important;padding:7px 16px;border-radius:var(--radius);font-weight:600;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+
+/* Layout */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+main{padding-top:80px;padding-bottom:60px}
+
+/* Login */
+#login-view{max-width:420px;margin:120px auto 0;text-align:center}
+#login-view h1{font-size:1.6rem;margin-bottom:8px}
+#login-view .sub{color:var(--text-2);font-size:0.92rem;margin-bottom:28px}
+.key-input{width:100%;padding:12px 16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--mono);font-size:0.85rem;outline:none;transition:border-color 0.2s}
+.key-input:focus{border-color:var(--primary-dim)}
+.key-input::placeholder{color:var(--text-3)}
+.login-btn{margin-top:12px;width:100%;padding:12px;border-radius:var(--radius);border:none;background:var(--primary);color:#050505;font-family:var(--heading);font-weight:600;font-size:0.92rem;cursor:pointer;transition:background 0.2s}
+.login-btn:hover{background:var(--accent)}
+.login-btn:disabled{opacity:0.5;cursor:wait}
+.login-error{color:var(--red);font-size:0.82rem;margin-top:10px;min-height:1.2em}
+.login-hint{color:var(--text-3);font-size:0.8rem;margin-top:16px}
+
+/* Dashboard */
+#dashboard-view{display:none}
+
+/* Profile header */
+.profile-header{display:flex;align-items:center;gap:24px;margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.pfp-wrap{position:relative;width:72px;height:72px;flex-shrink:0}
+.pfp{width:72px;height:72px;border-radius:50%;border:2px solid var(--border);object-fit:cover;background:var(--surface-2);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;transition:border-color 0.2s}
+.pfp:hover{border-color:var(--primary)}
+.pfp img{width:100%;height:100%;object-fit:cover}
+.pfp .initials{font-family:var(--heading);font-size:1.4rem;font-weight:700;color:var(--primary)}
+.pfp-upload{position:absolute;bottom:-2px;right:-2px;width:24px;height:24px;border-radius:50%;background:var(--primary);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.7rem;color:#050505;font-weight:700}
+.pfp-upload:hover{background:var(--accent)}
+#pfp-file{display:none}
+.profile-info h1{font-size:1.4rem;margin-bottom:2px}
+.profile-info .email{color:var(--text-2);font-size:0.88rem}
+.profile-info .member-since{color:var(--text-3);font-size:0.78rem;margin-top:2px}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-label{font-family:var(--mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px}
+.card-val{font-family:var(--mono);font-size:1.8rem;font-weight:500;color:var(--primary);letter-spacing:-0.02em}
+.card-val.small{font-size:1.2rem}
+.card-sub{font-size:0.78rem;color:var(--text-3);margin-top:4px}
+.card-val .tier-badge{display:inline-block;font-size:0.7rem;padding:3px 10px;border-radius:4px;background:rgba(245,158,11,0.12);color:var(--primary);border:1px solid var(--primary-dim);text-transform:uppercase;letter-spacing:0.06em;vertical-align:middle}
+
+/* API Key section */
+.key-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.key-section .card-label{margin-bottom:12px}
+.key-display{display:flex;align-items:center;gap:10px}
+.key-text{font-family:var(--mono);font-size:0.85rem;color:var(--text);flex:1;word-break:break-all;user-select:all;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px}
+.key-toggle,.copy-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text-2);padding:8px 14px;border-radius:6px;font-family:var(--mono);font-size:0.78rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.key-toggle:hover,.copy-btn:hover{border-color:var(--primary);color:var(--primary)}
+
+/* Usage table */
+.usage-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.usage-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:0.84rem}
+.usage-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);color:var(--text-3);font-family:var(--mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+.usage-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text-2)}
+.usage-table td:first-child{font-family:var(--mono);color:var(--text)}
+.usage-table td:last-child{font-family:var(--mono);color:var(--primary);text-align:right}
+.usage-table tr:hover td{background:var(--surface-2)}
+.usage-empty{color:var(--text-3);font-size:0.88rem;text-align:center;padding:24px 0}
+
+/* Quick actions */
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.action-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-family:var(--heading);font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.action-btn:hover{border-color:var(--primary);color:var(--primary)}
+.action-btn.primary{background:var(--primary);color:#050505;border-color:var(--primary)}
+.action-btn.primary:hover{background:var(--accent)}
+.action-btn.danger{border-color:var(--red);color:var(--red)}
+.action-btn.danger:hover{background:rgba(239,68,68,0.08)}
+
+/* Footer */
+footer{padding:48px 24px;border-top:1px solid var(--border);text-align:center;font-size:0.8rem;color:var(--text-3)}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px;flex-wrap:wrap}
+footer a{color:var(--text-3);transition:color 0.2s}
+footer a:hover{color:var(--primary)}
+
+@media(max-width:640px){
+  .nav-links{display:none}
+  .menu-toggle{display:block}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--bg);padding:24px;gap:16px}
+  .card-grid{grid-template-columns:1fr}
+  .profile-header{flex-direction:column;text-align:center}
+  .key-display{flex-direction:column}
+  .actions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">swarm<span>&amp;</span>bee</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/developers">Developers</a>
+      <a href="/account" class="active">Account</a>
+      <a href="/pricing" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- LOGIN VIEW -->
+  <div id="login-view">
+    <h1>Sign in</h1>
+    <p class="sub">Enter your API key to access your account.</p>
+    <form onsubmit="return doLogin(event)">
+      <input type="text" id="login-key" class="key-input" placeholder="sb_live_... or sk_swarm_..." autocomplete="off" spellcheck="false" required>
+      <button type="submit" class="login-btn" id="login-btn">Sign In</button>
+    </form>
+    <p class="login-error" id="login-error"></p>
+    <p class="login-hint">Your API key was emailed when you subscribed.<br>Don't have one? <a href="/pricing">Get started</a></p>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboard-view">
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="pfp-wrap">
+        <div class="pfp" id="pfp" onclick="document.getElementById('pfp-file').click()">
+          <span class="initials" id="pfp-initials"></span>
+        </div>
+        <div class="pfp-upload" onclick="document.getElementById('pfp-file').click()">+</div>
+        <input type="file" id="pfp-file" accept="image/*" onchange="handlePfpUpload(event)">
+      </div>
+      <div class="profile-info">
+        <h1 id="profile-name">—</h1>
+        <div class="email" id="profile-email"></div>
+        <div class="member-since" id="profile-since"></div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Plan</div>
+        <div class="card-val small" id="card-tier"><span class="tier-badge">—</span></div>
+        <div class="card-sub" id="card-rate-limit"></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Credits Remaining</div>
+        <div class="card-val" id="card-credits">—</div>
+        <div class="card-sub" id="card-credits-sub"></div>
+      </div>
+    </div>
+
+    <!-- API Key -->
+    <div class="key-section">
+      <div class="card-label">API Key</div>
+      <div class="key-display">
+        <div class="key-text" id="key-display">••••••••••••••••••••</div>
+        <button class="key-toggle" id="key-toggle" onclick="toggleKey()">Show</button>
+        <button class="copy-btn" onclick="copyKey()">Copy</button>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions">
+      <a href="/developers" class="action-btn">API Docs</a>
+      <a href="/datasets" class="action-btn">Browse Datasets</a>
+      <button class="action-btn" onclick="refreshData()">Refresh</button>
+      <button class="action-btn danger" onclick="doLogout()">Sign Out</button>
+    </div>
+
+    <!-- Usage -->
+    <div class="usage-section">
+      <div class="card-label">Usage (Last 7 Days)</div>
+      <div id="usage-content">
+        <p class="usage-empty">Loading...</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/developers">Developers</a>
+      <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+    </div>
+    <div style="margin-top:16px;font-size:0.82rem">
+      <a href="mailto:build@swarmandbee.com" style="color:var(--primary)">build@swarmandbee.com</a>
+    </div>
+    <div class="copyright" style="margin-top:12px;font-size:0.72rem;opacity:0.4">&copy; 2026 Swarm &amp; Bee Intelligence</div>
+  </div>
+</footer>
+
+<script>
+const ROUTER = 'https://router.swarmandbee.ai';
+const STORAGE_KEY = 'sb_api_key';
+const STORAGE_PFP = 'sb_pfp';
+let currentKey = '';
+let keyVisible = false;
+
+// ── Init ──────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    currentKey = saved;
+    showDashboard();
+  }
+});
+
+// ── Login ─────────────────────────────────────
+async function doLogin(e) {
+  e.preventDefault();
+  const key = document.getElementById('login-key').value.trim();
+  const btn = document.getElementById('login-btn');
+  const err = document.getElementById('login-error');
+  err.textContent = '';
+  btn.textContent = 'Signing in...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`${ROUTER}/wallet/balance`, {
+      headers: { 'X-API-Key': key }
+    });
+    if (!res.ok) {
+      err.textContent = res.status === 401 ? 'Invalid API key.' : `Error ${res.status}. Try again.`;
+      btn.textContent = 'Sign In';
+      btn.disabled = false;
+      return false;
+    }
+    currentKey = key;
+    localStorage.setItem(STORAGE_KEY, key);
+    showDashboard();
+  } catch {
+    err.textContent = 'Connection error. Try again.';
+  }
+  btn.textContent = 'Sign In';
+  btn.disabled = false;
+  return false;
+}
+
+function doLogout() {
+  localStorage.removeItem(STORAGE_KEY);
+  currentKey = '';
+  keyVisible = false;
+  document.getElementById('dashboard-view').style.display = 'none';
+  document.getElementById('login-view').style.display = 'block';
+  document.getElementById('login-key').value = '';
+}
+
+// ── Dashboard ─────────────────────────────────
+async function showDashboard() {
+  document.getElementById('login-view').style.display = 'none';
+  document.getElementById('dashboard-view').style.display = 'block';
+  loadPfp();
+  await refreshData();
+}
+
+async function refreshData() {
+  try {
+    const [balRes, usageRes] = await Promise.allSettled([
+      fetch(`${ROUTER}/wallet/balance`, { headers: { 'X-API-Key': currentKey } }),
+      fetch(`${ROUTER}/wallet/usage?days=7`, { headers: { 'X-API-Key': currentKey } })
+    ]);
+
+    if (balRes.status === 'fulfilled' && balRes.value.ok) {
+      const w = await balRes.value.json();
+      renderWallet(w);
+    }
+
+    if (usageRes.status === 'fulfilled' && usageRes.value.ok) {
+      const u = await usageRes.value.json();
+      renderUsage(u);
+    } else {
+      document.getElementById('usage-content').innerHTML = '<p class="usage-empty">No usage data available.</p>';
+    }
+  } catch {
+    // silent fail
+  }
+}
+
+function renderWallet(w) {
+  document.getElementById('profile-name').textContent = w.name || 'Account';
+  document.getElementById('pfp-initials').textContent = getInitials(w.name || 'A');
+  document.getElementById('profile-since').textContent = 'Member since ' + new Date(w.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  const tierEl = document.getElementById('card-tier');
+  tierEl.innerHTML = `<span class="tier-badge">${w.tier || 'free'}</span>`;
+  document.getElementById('card-rate-limit').textContent = `${w.rate_limit || 60} requests/min`;
+
+  const credits = parseFloat(w.balance) || 0;
+  document.getElementById('card-credits').textContent = credits.toLocaleString();
+  document.getElementById('card-credits-sub').textContent = credits > 100 ? 'Looking good' : credits > 0 ? 'Running low' : 'Empty — top up at /wallet/buy';
+
+  // Key display
+  document.getElementById('key-display').textContent = keyVisible ? currentKey : maskKey(currentKey);
+}
+
+function renderUsage(data) {
+  const container = document.getElementById('usage-content');
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    container.innerHTML = '<p class="usage-empty">No API calls yet. <a href="/developers">Read the docs</a> to get started.</p>';
+    return;
+  }
+
+  const rows = Array.isArray(data) ? data : (data.usage || []);
+  if (rows.length === 0) {
+    container.innerHTML = '<p class="usage-empty">No API calls in the last 7 days.</p>';
+    return;
+  }
+
+  let html = '<table class="usage-table"><thead><tr><th>Endpoint</th><th>Calls</th><th>Credits</th></tr></thead><tbody>';
+  for (const row of rows) {
+    html += `<tr><td>${row.endpoint || row.path || '—'}</td><td>${row.calls || row.count || 0}</td><td>${row.credits || row.total_cost || 0}</td></tr>`;
+  }
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ── Key Management ────────────────────────────
+function maskKey(key) {
+  if (!key) return '••••••••••••••••••••';
+  return key.substring(0, 12) + '•'.repeat(Math.max(0, key.length - 16)) + key.substring(key.length - 4);
+}
+
+function toggleKey() {
+  keyVisible = !keyVisible;
+  document.getElementById('key-display').textContent = keyVisible ? currentKey : maskKey(currentKey);
+  document.getElementById('key-toggle').textContent = keyVisible ? 'Hide' : 'Show';
+}
+
+function copyKey() {
+  navigator.clipboard.writeText(currentKey).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+function getInitials(name) {
+  if (!name) return '?';
+  return name.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+}
+
+// ── Profile Picture ───────────────────────────
+function handlePfpUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Image must be under 2MB');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = new Image();
+    img.onload = function() {
+      // Resize to 200x200
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 200;
+      const ctx = canvas.getContext('2d');
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width - size) / 2;
+      const sy = (img.height - size) / 2;
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, 200, 200);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      localStorage.setItem(STORAGE_PFP, dataUrl);
+      loadPfp();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function loadPfp() {
+  const saved = localStorage.getItem(STORAGE_PFP);
+  const pfpEl = document.getElementById('pfp');
+  if (saved) {
+    pfpEl.innerHTML = `<img src="${saved}" alt="Profile">`;
+  }
+}
+</script>
+</body>
+</html>
