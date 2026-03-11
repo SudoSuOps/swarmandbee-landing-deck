@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Welcome — Swarm & Bee</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --max-w:640px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+h1,h2{font-family:var(--heading);font-weight:700;letter-spacing:-0.03em}
+a{color:var(--primary);text-decoration:none}
+a:hover{color:var(--accent)}
+.card{max-width:var(--max-w);width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:48px 40px;text-align:center}
+.card h1{font-size:1.8rem;margin-bottom:8px}
+.card .sub{color:var(--text-2);font-size:0.95rem;margin-bottom:32px}
+.status{font-family:var(--mono);font-size:0.85rem;color:var(--text-3);margin-bottom:24px}
+.status.loading{color:var(--primary)}
+.status.error{color:#ff4444}
+.key-box{background:var(--surface-2);border:1px solid var(--primary-dim);border-radius:var(--radius);padding:20px;margin:24px 0;text-align:left}
+.key-box .label{font-family:var(--mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);margin-bottom:8px}
+.key-box .key{font-family:var(--mono);font-size:0.95rem;color:var(--text);word-break:break-all;user-select:all;cursor:text}
+.key-box .meta{font-size:0.78rem;color:var(--text-3);margin-top:10px}
+.copy-btn{margin-top:12px;background:var(--primary);color:#050505;border:none;padding:8px 20px;border-radius:var(--radius);font-family:var(--heading);font-weight:600;font-size:0.85rem;cursor:pointer;transition:background 0.2s}
+.copy-btn:hover{background:var(--accent)}
+.next-steps{text-align:left;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.next-steps h2{font-size:1rem;margin-bottom:12px}
+.next-steps li{font-size:0.88rem;color:var(--text-2);margin-bottom:8px;padding-left:4px}
+.next-steps code{font-family:var(--mono);font-size:0.8rem;background:var(--surface-2);padding:2px 6px;border-radius:4px}
+.links{margin-top:24px;display:flex;gap:16px;justify-content:center;font-size:0.88rem}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>You're in.</h1>
+  <p class="sub">Your subscription is active. Here's your API key.</p>
+
+  <div id="status" class="status loading">Activating your account...</div>
+
+  <div id="key-section" style="display:none">
+    <div class="key-box">
+      <div class="label">Your API Key</div>
+      <div class="key" id="api-key"></div>
+      <div class="meta" id="key-meta"></div>
+      <button class="copy-btn" onclick="copyKey()">Copy Key</button>
+    </div>
+
+    <div class="next-steps">
+      <h2>Quick start</h2>
+      <ol>
+        <li>Save your API key somewhere safe — it won't be shown again.</li>
+        <li>Pull data: <code>curl -H "Authorization: Bearer YOUR_KEY" https://api.swarmandbee.ai/api/data/pull</code></li>
+        <li>See <a href="/developers">API docs</a> for filters, verticals, and batch pulls.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="error-section" style="display:none">
+    <p style="color:var(--text-2);font-size:0.92rem;margin-top:16px">If this persists, email <a href="mailto:build@swarmandbee.com">build@swarmandbee.com</a> with your Stripe receipt and we'll get you sorted.</p>
+  </div>
+
+  <div class="links">
+    <a href="/datasets">Browse datasets</a>
+    <a href="/developers">API docs</a>
+    <a href="/">Home</a>
+  </div>
+</div>
+
+<script>
+(async function() {
+  const status = document.getElementById('status');
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+
+  if (!sessionId) {
+    status.textContent = 'No session found. If you just paid, check your email or contact build@swarmandbee.com';
+    status.className = 'status error';
+    document.getElementById('error-section').style.display = 'block';
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://api.swarmandbee.ai/api/data/activate?session_id=${encodeURIComponent(sessionId)}`);
+    const data = await res.json();
+
+    if (data.ok && data.api_key) {
+      status.style.display = 'none';
+      document.getElementById('key-section').style.display = 'block';
+      document.getElementById('api-key').textContent = data.api_key;
+      const meta = [];
+      if (data.tier) meta.push(`Tier: ${data.tier}`);
+      if (data.email) meta.push(data.email);
+      document.getElementById('key-meta').textContent = meta.join(' · ');
+    } else if (res.status === 402) {
+      status.textContent = 'Payment still processing. Refresh in a few seconds.';
+      status.className = 'status';
+    } else {
+      status.textContent = data.error || 'Could not activate. Contact build@swarmandbee.com';
+      status.className = 'status error';
+      document.getElementById('error-section').style.display = 'block';
+    }
+  } catch (e) {
+    status.textContent = 'Connection error. Please refresh or contact build@swarmandbee.com';
+    status.className = 'status error';
+    document.getElementById('error-section').style.display = 'block';
+  }
+})();
+
+function copyKey() {
+  const key = document.getElementById('api-key').textContent;
+  navigator.clipboard.writeText(key).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Key', 2000);
+  });
+}
+</script>
+</body>
+</html>

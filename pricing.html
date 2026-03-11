@@ -187,8 +187,10 @@ section{padding:100px 24px}
 .btn-primary:hover{background:var(--accent)}
 .btn-secondary{border:1px solid var(--border);color:var(--text-2)}
 .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
-.btn-outline{border:1px solid var(--border);color:var(--text-2)}
+.btn-outline{border:1px solid var(--border);color:var(--text-2);background:transparent;cursor:pointer}
 .btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+button.btn{cursor:pointer}
+button.btn:disabled{opacity:0.5;cursor:wait}
 
 /* INCLUDED */
 .included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
@@ -271,7 +273,7 @@ section{padding:100px 24px}
           <li>API access</li>
           <li>Quality metadata included</li>
         </ul>
-        <a href="mailto:build@swarmandbee.com?subject=Explorer%20Plan" class="btn btn-outline">Get Started &rarr;</a>
+        <button onclick="subscribe('explorer')" class="btn btn-outline">Get Started &rarr;</button>
       </div>
 
       <!-- BUILDER -->
@@ -287,7 +289,7 @@ section{padding:100px 24px}
           <li>Quality metadata included</li>
           <li>Priority support</li>
         </ul>
-        <a href="mailto:build@swarmandbee.com?subject=Builder%20Plan" class="btn btn-primary">Get Started &rarr;</a>
+        <button onclick="subscribe('builder')" class="btn btn-primary">Get Started &rarr;</button>
       </div>
 
       <!-- FLEET -->
@@ -304,7 +306,7 @@ section{padding:100px 24px}
           <li>Priority support</li>
           <li>Custom vertical requests</li>
         </ul>
-        <a href="mailto:build@swarmandbee.com?subject=Fleet%20Plan" class="btn btn-outline">Get Started &rarr;</a>
+        <button onclick="subscribe('fleet')" class="btn btn-outline">Get Started &rarr;</button>
       </div>
 
     </div>
@@ -445,5 +447,32 @@ section{padding:100px 24px}
   </div>
 </footer>
 
+<script>
+async function subscribe(tier) {
+  const btn = event.target;
+  const original = btn.textContent;
+  btn.textContent = 'Connecting to Stripe...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.swarmandbee.ai/api/data/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier })
+    });
+    const data = await res.json();
+    if (data.ok && data.url) {
+      window.location.href = data.url;
+    } else {
+      alert('Something went wrong. Please email build@swarmandbee.com');
+      btn.textContent = original;
+      btn.disabled = false;
+    }
+  } catch (e) {
+    alert('Connection error. Please email build@swarmandbee.com');
+    btn.textContent = original;
+    btn.disabled = false;
+  }
+}
+</script>
 </body>
 </html>
