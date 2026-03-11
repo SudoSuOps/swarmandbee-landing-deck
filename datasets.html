@@ -27,7 +27,7 @@
   "@type": "DataCatalog",
   "name": "Swarm & Bee Dataset Catalog",
   "url": "https://swarmandbee.ai/datasets",
-  "description": "1.86 million verified expert reasoning training pairs for AI fine-tuning across 6 domain verticals.",
+  "description": "1.86 million verified expert reasoning training pairs for AI fine-tuning across 8 domain verticals.",
   "provider": {
     "@type": "Organization",
     "name": "Swarm & Bee Intelligence",
@@ -239,7 +239,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
 <div class="stat-bar">
   <div class="container">
     <div class="stat-bar-inner">
-      <span class="num">1,859,665</span> total pairs<span class="sep">|</span><span class="num">5</span> verticals<span class="sep">|</span><span class="num">330+</span> specialties<span class="sep">|</span><span class="num">8</span> Zenodo DOIs<span class="sep">|</span>Hedera sealed
+      <span class="num">1,859,665</span> total pairs<span class="sep">|</span><span class="num">8</span> verticals<span class="sep">|</span><span class="num">330+</span> specialties<span class="sep">|</span><span class="num">8</span> Zenodo DOIs<span class="sep">|</span>Hedera sealed
     </div>
   </div>
 </div>
@@ -456,6 +456,138 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
   <div class="vertical-links">
     <a href="https://huggingface.co/datasets/SwarmandBee/signal-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
     <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer">Free samples on Zenodo &rarr;</a>
+  </div>
+</section>
+
+<!-- TECHNICAL AI -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Technical AI &amp; ML</h2>
+    <span class="pair-count">NEW</span>
+  </div>
+  <p class="desc">Technical mechanism reasoning sourced from 446,000+ academic works via OpenAlex. How architectures work, why they scale, when they fail. Platinum-filtered through 3-gate quality stack: mechanism reasoning, tradeoff analysis, and technical density scoring.</p>
+  <div class="label">Domains</div>
+  <div class="specialties">
+    <span class="tag">neural-networks (81K sources)</span>
+    <span class="tag">advanced-architectures (121K)</span>
+    <span class="tag">GPU-compute (41K)</span>
+    <span class="tag">explainability-XAI (59K)</span>
+    <span class="tag">LLM-text-generation (27K)</span>
+    <span class="tag">ML-algorithms (19K)</span>
+    <span class="tag">LoRA-fine-tuning</span>
+    <span class="tag">loss-interpretation</span>
+    <span class="tag">packing-efficiency</span>
+    <span class="tag">hardware-optimization</span>
+    <span class="tag">hyperparameter-tuning</span>
+    <span class="tag">training-methods</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_tech_000124"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"technical_ai"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"openalex"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"Why do mixture-of-experts models scale efficiently compared to dense transformers?"</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"MoE activates a subset of experts per token, increasing parameter capacity without proportional compute. This decouples model size from inference cost — a 1T parameter MoE can run at the cost of a 70B dense model."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"MoE achieves efficient scaling by routing each token to 2-4 experts from a pool of 64+, maintaining constant compute per token while growing total knowledge capacity. The tradeoff is increased memory footprint and load-balancing complexity across experts."</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 9<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.84<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 132<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"neural_networks"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-80B-A3B"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 24 <span class="punct">}</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="/developers">Pull via API &rarr;</a>
+    <a href="/pricing">Subscribe &rarr;</a>
+  </div>
+</section>
+
+<!-- REASONING & RESEARCH -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Reasoning &amp; Research</h2>
+    <span class="pair-count">NEW</span>
+  </div>
+  <p class="desc">Analyst decision logic, macro causality chains, and multi-step research reasoning. How rate shocks transmit through debt markets. How to design quality gates for training data. How to interpret loss curves. The meta-reasoning that makes models think like analysts, not chatbots.</p>
+  <div class="label">Cook Streams</div>
+  <div class="specialties">
+    <span class="tag">macro-causality</span>
+    <span class="tag">deal-graph-reasoning</span>
+    <span class="tag">rate-shock-transmission</span>
+    <span class="tag">credit-spread-cascade</span>
+    <span class="tag">distress-cycle-anatomy</span>
+    <span class="tag">pair-engineering</span>
+    <span class="tag">quality-gate-design</span>
+    <span class="tag">cove-promotion-logic</span>
+    <span class="tag">dedup-strategy</span>
+    <span class="tag">architecture-review</span>
+    <span class="tag">safety-assessment</span>
+    <span class="tag">policy-analysis</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_reason_002841"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"reasoning"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"macro_causality"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"The Fed raises rates 75bps with forward guidance of 'higher for longer.' Trace the causal chain through CRE debt markets over the next 18 months."</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"Rate hike → Treasury yield spike → CMBS spread widening → higher debt service costs → DSCR compression on floating-rate loans → forced refinancing at higher rates → property value decline via cap rate expansion → distressed sales by overleveraged sponsors."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"8-step causal chain: 1) 10Y Treasury moves to 4.8% within 2 weeks. 2) CMBS spreads widen 40-60bps. 3) Floating-rate borrowers face 200bps+ cost increase. 4) DSCR drops below 1.15x on ~30% of office loans. 5) Extension requests flood special servicers. 6) Cap rates decompress 50-75bps across all CRE..."</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 10<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.92<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 248<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"rate_shock_transmission"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-235B-A22B"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 25 <span class="punct">}</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="/developers">Pull via API &rarr;</a>
+    <a href="/pricing">Subscribe &rarr;</a>
+  </div>
+</section>
+
+<!-- AGENT MEMORY -->
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>Agent Memory Operations</h2>
+    <span class="pair-count">NEW</span>
+  </div>
+  <p class="desc">Training data for AI agents that need to remember, forget, and reason about their own memory. Importance scoring, contradiction detection, memory consolidation, retrieval re-ranking, and stale memory pruning across 6 operational domains.</p>
+  <div class="label">Capability Streams</div>
+  <div class="specialties">
+    <span class="tag">importance-scoring</span>
+    <span class="tag">contradiction-detection</span>
+    <span class="tag">memory-consolidation</span>
+    <span class="tag">retrieval-reranking</span>
+    <span class="tag">stale-memory-pruning</span>
+    <span class="tag">episode-compression</span>
+  </div>
+  <div class="label">Operational Domains</div>
+  <div class="specialties">
+    <span class="tag">personal-assistant</span>
+    <span class="tag">enterprise-knowledge</span>
+    <span class="tag">multi-agent-crew</span>
+    <span class="tag">code-development</span>
+    <span class="tag">customer-support</span>
+    <span class="tag">research-workflow</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_mem_004712"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"agent_memory"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"conflict_detection"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"Memory A: 'User prefers Python for data work.' Memory B (3 months later): 'User says they've switched entirely to Rust for all new projects.' Resolve the conflict."</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"Temporal ordering matters — Memory B is newer and explicitly overrides the language preference. However, 'all new projects' doesn't retroactively change existing Python codebases."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"Winner: Memory B. Update preference to Rust for new work. Retain Memory A with reduced weight for legacy Python project context. Tag Memory A as 'superseded' not 'deleted.'"</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 8<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.68<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 118<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"conflict"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-80B-A3B"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"gold"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 21 <span class="punct">}</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="/developers">Pull via API &rarr;</a>
+    <a href="/pricing">Subscribe &rarr;</a>
   </div>
 </section>
 
