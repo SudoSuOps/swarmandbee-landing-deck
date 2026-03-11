@@ -29,6 +29,10 @@ The company operates a four-layer stack: Signal (real-time market intelligence f
 
 - [Market Demand Analysis](https://swarmandbee.ai/demand): The 10 datasets AI labs cannot get — expert reasoning data scarcity analysis
 
+## Developer Documentation
+
+- [API Documentation](https://swarmandbee.ai/developers): Full API reference — authentication, endpoints, skills, credit costs, code examples
+
 ## API
 
 - API endpoint: api.swarmandbee.ai (OpenAI-compatible)
