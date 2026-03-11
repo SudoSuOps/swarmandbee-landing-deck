@@ -27,7 +27,7 @@
   "@type": "DataCatalog",
   "name": "Swarm & Bee Dataset Catalog",
   "url": "https://swarmandbee.ai/datasets",
-  "description": "1.86 million verified expert reasoning training pairs for AI fine-tuning across 8 domain verticals.",
+  "description": "1.86 million verified expert reasoning training pairs for AI fine-tuning across 9 domain verticals.",
   "provider": {
     "@type": "Organization",
     "name": "Swarm & Bee Intelligence",
@@ -239,7 +239,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
 <div class="stat-bar">
   <div class="container">
     <div class="stat-bar-inner">
-      <span class="num">1,859,665</span> total pairs<span class="sep">|</span><span class="num">8</span> verticals<span class="sep">|</span><span class="num">330+</span> specialties<span class="sep">|</span><span class="num">8</span> Zenodo DOIs<span class="sep">|</span>Hedera sealed
+      <span class="num">1,859,665</span> total pairs<span class="sep">|</span><span class="num">9</span> verticals<span class="sep">|</span><span class="num">330+</span> specialties<span class="sep">|</span><span class="num">8</span> Zenodo DOIs<span class="sep">|</span>Hedera sealed
     </div>
   </div>
 </div>
@@ -584,6 +584,53 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
   <span class="key">"technical_density"</span><span class="punct">:</span> 0.68<span class="punct">,</span>
   <span class="key">"token_count"</span><span class="punct">:</span> 118<span class="punct">,</span>
   <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"conflict"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-80B-A3B"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"gold"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 21 <span class="punct">}</span>
+<span class="punct">}</span></code></div>
+  <div class="vertical-links">
+    <a href="/developers">Pull via API &rarr;</a>
+    <a href="/pricing">Subscribe &rarr;</a>
+  </div>
+</section>
+
+<section class="vertical">
+  <div class="vertical-header">
+    <h2>AI Infrastructure Economics</h2>
+    <span class="pair-count">NEW</span>
+  </div>
+  <p class="desc">Training data for reasoning about GPU cluster economics, model training cost analysis, and inference infrastructure decisions. Built from real operational data — actual training runs, throughput benchmarks, hardware tradeoffs, and deployment economics across edge, on-prem, and cloud.</p>
+  <div class="label">Decision Domains</div>
+  <div class="specialties">
+    <span class="tag">gpu-cluster-economics</span>
+    <span class="tag">training-cost-analysis</span>
+    <span class="tag">inference-optimization</span>
+    <span class="tag">edge-vs-cloud-tradeoffs</span>
+    <span class="tag">vram-budget-planning</span>
+    <span class="tag">throughput-per-dollar</span>
+  </div>
+  <div class="label">Infrastructure Topics</div>
+  <div class="specialties">
+    <span class="tag">batch-size-economics</span>
+    <span class="tag">quantization-tradeoffs</span>
+    <span class="tag">multi-gpu-scaling</span>
+    <span class="tag">model-serving-costs</span>
+    <span class="tag">hardware-refresh-cycles</span>
+    <span class="tag">power-cooling-opex</span>
+    <span class="tag">lora-vs-full-finetune</span>
+    <span class="tag">fleet-scheduling</span>
+  </div>
+  <div class="label">Sample Record</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_infra_001847"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"infra_economics"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"gpu_cluster_economics"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"A team needs to fine-tune a 27B dense model on 45K training pairs. They have access to a single RTX 3090 (24GB) or a single RTX PRO 6000 (96GB). Compare total training cost including time-to-completion, power draw, and VRAM constraints."</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"27B bf16 requires ~54GB base weights + optimizer states. RTX 3090 (24GB) cannot fit bf16 — must use QLoRA 4-bit (6.75GB weights) with batch=1, grad_accum=32, seq=2048. Fits at ~22.5GB but runs ~98s/step. RTX PRO 6000 (96GB) runs bf16 LoRA natively — batch=4, seq=4096, ~12s/step. 844 steps: 3090 = ~23 hours at 350W = 8.05 kWh. 6000 = ~2.8 hours at 300W = 0.84 kWh. The 3090 costs 9.6x more in power and 8.2x more in wall-clock time."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"RTX PRO 6000 wins on every metric for 27B training: 8.2x faster, 9.6x less power, no quantization quality loss. The 3090 is viable for 9B models (bf16 fits at 18GB) but becomes a bottleneck above 14B parameters. Recommendation: use 3090 fleet for 9B inference serving, reserve 96GB cards for 27B+ training."</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 9<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.91<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 203<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"gpu_economics"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"operational_telemetry"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 24 <span class="punct">}</span>
 <span class="punct">}</span></code></div>
   <div class="vertical-links">
     <a href="/developers">Pull via API &rarr;</a>
