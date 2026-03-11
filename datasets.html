@@ -162,6 +162,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,5,.88);b
 .vertical-links{display:flex;gap:20px;flex-wrap:wrap}
 .vertical-links a{font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:4px}
 
+/* CREDIT/QUALITY TABLE */
+.credit-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:.84rem}
+.credit-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);color:var(--text-3);font-family:var(--mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.credit-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-2)}
+.credit-table td:first-child{font-family:var(--mono);color:var(--text)}
+.credit-table tr:hover td{background:var(--surface)}
+
 /* QUALITY PIPELINE */
 .pipeline-section{margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid var(--border)}
 .pipeline-section h2{font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
@@ -224,7 +231,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
 <section class="page-header">
   <div class="container">
     <h1>Dataset Catalog</h1>
-    <p class="subtitle">1.86 million expert reasoning pairs across 5 verticals. Every pair passes 6 quality gates and CoVe verification. JSONL format, ready for any SFT pipeline.</p>
+    <p class="subtitle">Reasoning datasets for next-generation LLMs. 1.86 million pairs across 5 high-value domains with platinum quality filtering, full lineage, and traceable provenance.</p>
   </div>
 </section>
 
@@ -272,11 +279,26 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
   </div>
   <div class="label">Sample Record</div>
   <div class="code-block"><code><span class="punct">{</span>
-  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"A 120,000 SF industrial warehouse in Memphis is listed at $14.4M with a 6.2% cap rate. The tenant is a 3PL operator on a 12-year absolute NNN lease with 2.5% annual escalations. Underwrite this deal."</span><span class="punct">,</span>
-  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Current NOI: $14,400,000 x 0.062 = $892,800. Year-1 rent: $892,800 / 120,000 = $7.44/SF..."</span><span class="punct">,</span>
-  <span class="key">"task_type"</span><span class="punct">:</span> <span class="str">"underwriting_calc"</span><span class="punct">,</span>
-  <span class="key">"difficulty"</span><span class="punct">:</span> <span class="str">"medium"</span><span class="punct">,</span>
-  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_cre_014392"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"cre"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"capital_markets_cook"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"A 120,000 SF industrial warehouse in Memphis is listed at $14.4M with a 6.2% cap rate. 3PL tenant on a 12-year NNN lease with 2.5% annual escalations. Underwrite this deal."</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"Long-term NNN lease eliminates operating expense risk. 2.5% escalations compound favorably against inflation. Memphis 3PL demand is structural due to FedEx hub proximity."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"Current NOI: $14,400,000 x 0.062 = $892,800. Rent PSF: $7.44. Year-5 NOI with escalations: $1,009,847. IRR at 5-year hold with 5.8% exit cap: 8.9%. Decision: Approve."</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 9<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.87<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 156<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span>
+    <span class="key">"cook_stream"</span><span class="punct">:</span> <span class="str">"debt_maturity"</span><span class="punct">,</span>
+    <span class="key">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-80B-A3B"</span><span class="punct">,</span>
+    <span class="key">"pass_model"</span><span class="punct">:</span> <span class="str">"Qwen3-235B-A22B"</span><span class="punct">,</span>
+    <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span><span class="punct">,</span>
+    <span class="key">"cove_score"</span><span class="punct">:</span> 23<span class="punct">,</span>
+    <span class="key">"cooked_at"</span><span class="punct">:</span> <span class="str">"2026-03-08T14:22:31Z"</span><span class="punct">,</span>
+    <span class="key">"hedera_tx"</span><span class="punct">:</span> <span class="str">"0.0.10291838@1741443751"</span>
+  <span class="punct">}</span>
 <span class="punct">}</span></code></div>
   <div class="vertical-links">
     <a href="https://huggingface.co/datasets/SwarmandBee/cre-intelligence-objects" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
@@ -312,10 +334,18 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
   </div>
   <div class="label">Sample Record</div>
   <div class="code-block"><code><span class="punct">{</span>
-  <span class="key">"question"</span><span class="punct">:</span> <span class="str">"A 58-year-old male presents with acute onset chest pain radiating to the left arm, diaphoresis, and ST-elevation in leads II, III, and aVF. Troponin is elevated. Diagnosis and management?"</span><span class="punct">,</span>
-  <span class="key">"answer"</span><span class="punct">:</span> <span class="str">"Acute inferior STEMI. Immediate management: dual antiplatelet therapy, heparin, emergent PCI within 90 minutes..."</span><span class="punct">,</span>
-  <span class="key">"specialty"</span><span class="punct">:</span> <span class="str">"cardiology"</span><span class="punct">,</span>
-  <span class="key">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span>
+  <span class="key">"id"</span><span class="punct">:</span> <span class="str">"swarm_med_087241"</span><span class="punct">,</span>
+  <span class="key">"vertical"</span><span class="punct">:</span> <span class="str">"medical"</span><span class="punct">,</span>
+  <span class="key">"source"</span><span class="punct">:</span> <span class="str">"specialty_cook"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span><span class="punct">:</span> <span class="str">"58M with acute chest pain radiating to the left arm, diaphoresis, ST-elevation in II, III, aVF. Troponin elevated. Diagnosis and management?"</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span><span class="punct">:</span> <span class="str">"Inferior leads (II, III, aVF) with ST-elevation indicates right coronary artery occlusion. Elevated troponin confirms myocardial necrosis. Time-sensitive reperfusion is critical."</span><span class="punct">,</span>
+  <span class="key">"output"</span><span class="punct">:</span> <span class="str">"Acute inferior STEMI. Immediate: dual antiplatelet therapy, heparin, emergent PCI within 90 minutes. Monitor for RV infarction and bradycardia."</span><span class="punct">,</span>
+  <span class="key">"score"</span><span class="punct">:</span> 9<span class="punct">,</span>
+  <span class="key">"mechanism"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"tradeoff"</span><span class="punct">:</span> true<span class="punct">,</span>
+  <span class="key">"technical_density"</span><span class="punct">:</span> 0.91<span class="punct">,</span>
+  <span class="key">"token_count"</span><span class="punct">:</span> 128<span class="punct">,</span>
+  <span class="key">"lineage"</span><span class="punct">:</span> <span class="punct">{</span> <span class="str">"cook_stream"</span><span class="punct">:</span> <span class="str">"cardiology"</span><span class="punct">,</span> <span class="str">"gen_model"</span><span class="punct">:</span> <span class="str">"Qwen3-80B-A3B"</span><span class="punct">,</span> <span class="str">"quality_tier"</span><span class="punct">:</span> <span class="str">"platinum"</span><span class="punct">,</span> <span class="str">"cove_score"</span><span class="punct">:</span> 22 <span class="punct">}</span>
 <span class="punct">}</span></code></div>
   <div class="vertical-links">
     <a href="https://huggingface.co/datasets/SwarmandBee/medical-intelligence" target="_blank" rel="noopener noreferrer">Browse on HuggingFace &rarr;</a>
@@ -475,13 +505,109 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
   </div>
 </section>
 
+<!-- PACKAGE FORMAT -->
+<section class="pipeline-section">
+  <h2>Package Format</h2>
+  <p>Clean JSONL with separated instruction, reasoning, and output fields. Every pair ships with quality scores and full dataset lineage. Drop into any SFT pipeline -- Unsloth, TRL, Axolotl, LLaMA-Factory.</p>
+
+  <div class="label">Schema</div>
+  <div class="code-block"><code><span class="punct">{</span>
+  <span class="key">"id"</span>:                 <span class="str">"swarm_{vertical}_{seq}"</span><span class="punct">,</span>     <span style="color:var(--text-3)">// Unique pair ID</span>
+  <span class="key">"vertical"</span>:           <span class="str">"cre | medical | aviation | capital_markets | signal"</span><span class="punct">,</span>
+  <span class="key">"source"</span>:             <span class="str">"cook stream name"</span><span class="punct">,</span>
+  <span class="key">"instruction"</span>:        <span class="str">"The question or task prompt"</span><span class="punct">,</span>
+  <span class="key">"reasoning"</span>:          <span class="str">"Why — the causal/mechanistic reasoning chain"</span><span class="punct">,</span>
+  <span class="key">"output"</span>:             <span class="str">"The structured answer with calculations and decisions"</span><span class="punct">,</span>
+  <span class="key">"score"</span>:              <span class="str">1-10 quality score</span><span class="punct">,</span>
+  <span class="key">"mechanism"</span>:          <span class="str">true | false — contains causal reasoning</span><span class="punct">,</span>
+  <span class="key">"tradeoff"</span>:           <span class="str">true | false — contains decision boundary analysis</span><span class="punct">,</span>
+  <span class="key">"technical_density"</span>:  <span class="str">0.0-1.0 — ratio of domain terms to total tokens</span><span class="punct">,</span>
+  <span class="key">"token_count"</span>:        <span class="str">integer — total tokens in the pair</span><span class="punct">,</span>
+  <span class="key">"lineage"</span>:            <span class="punct">{</span>
+    <span class="key">"cook_stream"</span>:      <span class="str">"originating pipeline"</span><span class="punct">,</span>
+    <span class="key">"gen_model"</span>:        <span class="str">"generation model ID"</span><span class="punct">,</span>
+    <span class="key">"pass_model"</span>:       <span class="str">"quality rewrite model ID (if applicable)"</span><span class="punct">,</span>
+    <span class="key">"quality_tier"</span>:     <span class="str">"bronze | silver | gold | platinum"</span><span class="punct">,</span>
+    <span class="key">"cove_score"</span>:       <span class="str">0-25 Chain of Verification score</span><span class="punct">,</span>
+    <span class="key">"cooked_at"</span>:        <span class="str">"ISO 8601 timestamp"</span><span class="punct">,</span>
+    <span class="key">"hedera_tx"</span>:        <span class="str">"Hedera Consensus Service transaction ID"</span>
+  <span class="punct">}</span>
+<span class="punct">}</span></code></div>
+</section>
+
+<!-- QUALITY REPORT -->
+<section class="pipeline-section">
+  <h2>Quality Report</h2>
+  <p>Every delivery includes a quality report with aggregate metrics. This is how we differentiate -- full transparency on what you're training on.</p>
+
+  <table class="credit-table" style="max-width:680px">
+    <thead><tr><th>Metric</th><th style="text-align:right">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Total pairs delivered</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">1,859,665</td></tr>
+      <tr><td>Avg token length</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">142</td></tr>
+      <tr><td>Mechanism reasoning rate</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">91%</td></tr>
+      <tr><td>Tradeoff reasoning rate</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">78%</td></tr>
+      <tr><td>Avg technical density</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">0.82</td></tr>
+      <tr><td>Avg quality score</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">8.4 / 10</td></tr>
+      <tr><td>Platinum tier rate</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">68%</td></tr>
+      <tr><td>Gold tier rate</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">24%</td></tr>
+      <tr><td>Duplicate rate</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">&lt; 2%</td></tr>
+      <tr><td>CoVe pass rate (20/25+)</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">92%</td></tr>
+      <tr><td>Hedera sealed batches</td><td style="text-align:right;color:var(--primary);font-family:var(--mono)">100%</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- LINEAGE -->
+<section class="pipeline-section">
+  <h2>Dataset Lineage</h2>
+  <p>Every pair is traceable. Source stream, generation model, quality score, timestamp, and blockchain provenance seal. This is becoming critical for EU AI Act compliance and institutional buyers who need to audit their training data.</p>
+
+  <div class="gates">
+    <div class="gate">
+      <div class="gate-num">SOURCE</div>
+      <h4>Cook Stream</h4>
+      <p>Which pipeline generated the pair -- debt_maturity, cardiology, aerodynamics, macro_causality, etc.</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">QUALITY</div>
+      <h4>Score + Gates</h4>
+      <p>Quality score (1-10), mechanism/tradeoff flags, technical density, CoVe score (0-25)</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">MODELS</div>
+      <h4>Generation Chain</h4>
+      <p>Which models generated and verified -- GEN (80B fast) then PASS (235B quality rewrite)</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">TIME</div>
+      <h4>Timestamp</h4>
+      <p>ISO 8601 cook timestamp. Know exactly when each pair was manufactured.</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">PROVENANCE</div>
+      <h4>Hedera Seal</h4>
+      <p>Merkle root + Hedera Consensus Service transaction. Immutable, verifiable, auditable.</p>
+    </div>
+    <div class="gate">
+      <div class="gate-num">DEDUP</div>
+      <h4>Fingerprint</h4>
+      <p>MD5 content hash for cross-dataset deduplication. No hidden overlaps in your training mix.</p>
+    </div>
+  </div>
+</section>
+
 <!-- FORMAT & DELIVERY -->
 <section class="format-section">
   <h2>Format &amp; Delivery</h2>
-  <p>All datasets delivered as JSONL -- plug directly into any SFT pipeline. Compatible with Unsloth, TRL, Axolotl, LLaMA-Factory, or any trainer that reads JSONL.</p>
-  <div class="label">API Access</div>
+  <p>JSONL with one record per line. Compatible with every major training framework. Pull via API or download as file.</p>
+  <div class="label">API Pull</div>
   <div class="code-block"><code>curl -H "Authorization: Bearer YOUR_API_KEY" \
-     https://api.swarmandbee.ai/api/data/pull?dataset=cre-intelligence-objects&amp;limit=100</code></div>
+     "https://api.swarmandbee.ai/api/data/pull?vertical=cre&amp;tier=platinum&amp;limit=10000"</code></div>
+  <div class="label">Free Sample (no auth)</div>
+  <div class="code-block"><code>curl https://api.swarmandbee.ai/api/data/sample</code></div>
+  <div class="label">Full Docs</div>
+  <p style="color:var(--text-2);font-size:.9rem">See the <a href="/developers">Developer API docs</a> for filtering by vertical, specialty, difficulty, quality tier, and pagination.</p>
 </section>
 
 <!-- CTA -->
