@@ -659,6 +659,14 @@ footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
       </div>
       <a href="/datasets" class="btn btn-outline">Full Catalog</a>
     </div>
+    <div style="margin-top:40px;max-width:480px;margin-left:auto;margin-right:auto">
+      <p style="font-size:0.88rem;color:var(--text-3);margin-bottom:12px">Or get the daily intelligence brief + 10 free API credits:</p>
+      <form id="subscribe-form" onsubmit="return handleSubscribe(event)" style="display:flex;gap:8px">
+        <input type="email" id="sub-email" placeholder="you@company.com" required style="flex:1;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--font);font-size:0.88rem;outline:none" onfocus="this.style.borderColor='var(--primary-dim)'" onblur="this.style.borderColor='var(--border)'">
+        <button type="submit" class="btn btn-primary" style="white-space:nowrap;padding:10px 20px;border:none">Subscribe</button>
+      </form>
+      <p id="sub-status" style="font-size:0.82rem;margin-top:8px;color:var(--text-3);min-height:1.2em"></p>
+    </div>
   </div>
 </section>
 
@@ -689,5 +697,37 @@ footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
   </div>
 </footer>
 
+<script>
+async function handleSubscribe(e) {
+  e.preventDefault();
+  const email = document.getElementById('sub-email').value.trim();
+  const status = document.getElementById('sub-status');
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://router.swarmandbee.ai/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (data.ok || data.message?.includes('already')) {
+      status.style.color = 'var(--primary)';
+      status.textContent = 'Check your email to confirm. Welcome aboard.';
+      document.getElementById('sub-email').value = '';
+    } else {
+      status.style.color = '#ff4444';
+      status.textContent = data.message || 'Something went wrong. Try again.';
+    }
+  } catch {
+    status.style.color = '#ff4444';
+    status.textContent = 'Connection error. Try again.';
+  }
+  btn.textContent = 'Subscribe';
+  btn.disabled = false;
+  return false;
+}
+</script>
 </body>
 </html>

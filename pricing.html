@@ -356,6 +356,14 @@ button.btn:disabled{opacity:0.5;cursor:wait}
         <a href="https://huggingface.co/datasets/SwarmandBee/SwarmFailure-Intelligence" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Failure Intelligence (2K pairs) &rarr;</a>
         <a href="https://huggingface.co/datasets/SwarmandBee/SwarmAgent-Workflows" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Agent Workflows (1K pairs) &rarr;</a>
       </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+        <p style="font-size:0.88rem;color:var(--text-2);margin-bottom:10px">Get the daily intelligence brief + 10 free API credits:</p>
+        <form id="subscribe-form" onsubmit="return handleNewsletterSub(event)" style="display:flex;gap:8px;max-width:420px">
+          <input type="email" id="nl-email" placeholder="you@company.com" required style="flex:1;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--font);font-size:0.88rem;outline:none" onfocus="this.style.borderColor='var(--primary-dim)'" onblur="this.style.borderColor='var(--border)'">
+          <button type="submit" class="btn btn-primary" style="white-space:nowrap;padding:10px 20px;border:none">Subscribe</button>
+        </form>
+        <p id="nl-status" style="font-size:0.82rem;margin-top:8px;color:var(--text-3);min-height:1.2em"></p>
+      </div>
     </div>
 
     <!-- INFERENCE API -->
@@ -448,6 +456,37 @@ button.btn:disabled{opacity:0.5;cursor:wait}
 </footer>
 
 <script>
+async function handleNewsletterSub(e) {
+  e.preventDefault();
+  const email = document.getElementById('nl-email').value.trim();
+  const status = document.getElementById('nl-status');
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://router.swarmandbee.ai/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (data.ok || data.message?.includes('already')) {
+      status.style.color = 'var(--primary)';
+      status.textContent = 'Check your email to confirm. 10 free credits incoming.';
+      document.getElementById('nl-email').value = '';
+    } else {
+      status.style.color = '#ff4444';
+      status.textContent = data.message || 'Something went wrong. Try again.';
+    }
+  } catch {
+    status.style.color = '#ff4444';
+    status.textContent = 'Connection error. Try again.';
+  }
+  btn.textContent = 'Subscribe';
+  btn.disabled = false;
+  return false;
+}
+
 async function subscribe(tier) {
   const btn = event.target;
   const original = btn.textContent;
