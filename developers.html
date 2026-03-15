@@ -186,6 +186,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center}
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers" class="active">Developers</a>
       <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
@@ -557,6 +558,95 @@ X-Credits-Remaining: 48</code></div>
 <span class="punct">}</span></code></div>
 </section>
 
+<!-- DATA MARKETPLACE (WAREHOUSE) -->
+<section class="doc-section">
+  <h2>Data Marketplace API</h2>
+  <p>Browse, purchase, and download verified training pairs from the warehouse. Base URL: <code>https://warehouse.swarmandbee.ai</code></p>
+
+  <div class="label">Public (no auth)</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/honey/catalog</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/honey/catalog/:task_type</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/honey/stats</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="label">Authenticated</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method post">POST</span><span class="path">/honey/order</span><span class="cost">metered</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/honey/orders</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="code-label">Browse the warehouse catalog</div>
+  <div class="code-block"><code><span class="cmd">curl</span> <span class="url">https://warehouse.swarmandbee.ai/honey/catalog</span></code></div>
+
+  <div class="response-block">
+    <div class="response-label">Response</div>
+    <div class="code-block"><code><span class="punct">[</span>
+  <span class="punct">{</span>
+    <span class="key">"task_type"</span>: <span class="str">"underwriting"</span>,
+    <span class="key">"domain"</span>: <span class="str">"cre"</span>,
+    <span class="key">"pair_count"</span>: 127400,
+    <span class="key">"tier_distribution"</span>: <span class="punct">{</span> <span class="key">"royal_jelly"</span>: 2100, <span class="key">"honey"</span>: 89200, ... <span class="punct">}</span>,
+    <span class="key">"avg_score"</span>: 84.2,
+    <span class="key">"sample_available"</span>: true
+  <span class="punct">}</span>,
+  ...
+<span class="punct">]</span></code></div>
+  </div>
+
+  <div class="code-label">Place an order</div>
+  <div class="code-block"><code><span class="cmd">curl</span> <span class="flag">-X POST</span> <span class="url">https://warehouse.swarmandbee.ai/honey/order</span> \
+  <span class="flag">-H</span> <span class="str">"X-API-Key: YOUR_KEY"</span> \
+  <span class="flag">-H</span> <span class="str">"Content-Type: application/json"</span> \
+  <span class="flag">-d</span> <span class="str">'{
+    "domain": "cre",
+    "task_type": "underwriting",
+    "tier_minimum": "honey",
+    "pair_count": 10000
+  }'</span></code></div>
+</section>
+
+<!-- PROVENANCE API (LEDGER) -->
+<section class="doc-section">
+  <h2>Provenance API</h2>
+  <p>Verify data lineage, trace pairs back to their source signal, and validate Merkle proofs. Base URL: <code>https://ledger.swarmandbee.ai</code></p>
+
+  <div class="label">Dashboard</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/summary</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/health</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="label">Pair Data</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/pairs?domain=cre&amp;tier=honey&amp;limit=50</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/pairs/:id</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/pairs/:id/trace</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="label">Batches &amp; Domains</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/batches</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/batches/:id</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/domains</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/tiers</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="label">Merkle Proofs</div>
+  <div class="endpoint-grid">
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/proof/:pair_id</span><span class="cost">free</span></div>
+    <div class="endpoint"><span class="method get">GET</span><span class="path">/api/verify?pair_id=X</span><span class="cost">free</span></div>
+  </div>
+
+  <div class="code-label">Full provenance trace</div>
+  <div class="code-block"><code><span class="cmd">curl</span> <span class="url">https://ledger.swarmandbee.ai/api/pairs/HIVE-CRE-abc123/trace</span></code></div>
+
+  <div class="code-label">Verify a Merkle proof</div>
+  <div class="code-block"><code><span class="cmd">curl</span> <span class="url">"https://ledger.swarmandbee.ai/api/verify?pair_id=HIVE-CRE-abc123"</span></code></div>
+
+  <div class="note"><strong>Try it live:</strong> Visit the <a href="/trace">Trace page</a> for an interactive provenance viewer with Merkle proof verification.</div>
+</section>
+
 <!-- WEBHOOKS -->
 <section class="doc-section">
   <h2>Stripe Integration</h2>
@@ -608,6 +698,7 @@ X-Credits-Remaining: 48</code></div>
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers">Developers</a>
       <a href="/account">Account</a>

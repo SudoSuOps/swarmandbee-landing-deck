@@ -131,6 +131,7 @@ footer a:hover{color:var(--primary)}
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers">Developers</a>
       <a href="/account" class="active">Account</a>
@@ -213,6 +214,14 @@ footer a:hover{color:var(--primary)}
       </div>
     </div>
 
+    <!-- Order History (from warehouse) -->
+    <div class="usage-section">
+      <div class="card-label">Order History</div>
+      <div id="orders-content">
+        <p class="usage-empty">Loading...</p>
+      </div>
+    </div>
+
   </div>
 
 </main>
@@ -223,6 +232,7 @@ footer a:hover{color:var(--primary)}
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers">Developers</a>
       <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
@@ -301,9 +311,10 @@ async function showDashboard() {
 
 async function refreshData() {
   try {
-    const [balRes, usageRes] = await Promise.allSettled([
+    const [balRes, usageRes, ordersRes] = await Promise.allSettled([
       fetch(`${ROUTER}/wallet/balance`, { headers: { 'X-API-Key': currentKey } }),
-      fetch(`${ROUTER}/wallet/usage?days=7`, { headers: { 'X-API-Key': currentKey } })
+      fetch(`${ROUTER}/wallet/usage?days=7`, { headers: { 'X-API-Key': currentKey } }),
+      fetch('https://warehouse.swarmandbee.ai/honey/orders', { headers: { 'X-API-Key': currentKey } })
     ]);
 
     if (balRes.status === 'fulfilled' && balRes.value.ok) {
@@ -316,6 +327,13 @@ async function refreshData() {
       renderUsage(u);
     } else {
       document.getElementById('usage-content').innerHTML = '<p class="usage-empty">No usage data available.</p>';
+    }
+
+    if (ordersRes.status === 'fulfilled' && ordersRes.value.ok) {
+      const o = await ordersRes.value.json();
+      renderOrders(o);
+    } else {
+      document.getElementById('orders-content').innerHTML = '<p class="usage-empty">No orders yet. <a href="/datasets">Browse datasets</a> to get started.</p>';
     }
   } catch {
     // silent fail
@@ -355,6 +373,32 @@ function renderUsage(data) {
   let html = '<table class="usage-table"><thead><tr><th>Endpoint</th><th>Calls</th><th>Credits</th></tr></thead><tbody>';
   for (const row of rows) {
     html += `<tr><td>${row.endpoint || row.path || '—'}</td><td>${row.calls || row.count || 0}</td><td>${row.credits || row.total_cost || 0}</td></tr>`;
+  }
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ── Order History (from warehouse) ────────────
+function renderOrders(data) {
+  const container = document.getElementById('orders-content');
+  const orders = Array.isArray(data) ? data : (data.orders || []);
+  if (orders.length === 0) {
+    container.innerHTML = '<p class="usage-empty">No orders yet. <a href="/datasets">Browse datasets</a> to get started.</p>';
+    return;
+  }
+
+  let html = '<table class="usage-table"><thead><tr><th>Order</th><th>Domain</th><th>Pairs</th><th>Tier</th><th>Status</th><th>Date</th></tr></thead><tbody>';
+  for (const o of orders) {
+    const date = o.created_at ? new Date(o.created_at).toLocaleDateString() : '—';
+    const status = o.status === 'delivered' ? '<span style="color:var(--green)">' + o.status + '</span>' : o.status || '—';
+    html += '<tr>';
+    html += '<td>' + (o.order_id || '—') + '</td>';
+    html += '<td>' + (o.domain || '—') + '</td>';
+    html += '<td>' + (o.pair_count || 0).toLocaleString() + '</td>';
+    html += '<td>' + (o.tier_minimum || '—') + '</td>';
+    html += '<td>' + status + '</td>';
+    html += '<td>' + date + '</td>';
+    html += '</tr>';
   }
   html += '</tbody></table>';
   container.innerHTML = html;

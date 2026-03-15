@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trace — Data Provenance Viewer | Swarm & Bee</title>
+<meta name="description" content="Verify the provenance of any Swarm & Bee training pair. Full lineage trace, JellyScore breakdown, 6 deterministic gates, and Merkle proof verification.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://swarmandbee.ai/trace">
+<meta property="og:title" content="Trace — Data Provenance Viewer | Swarm & Bee">
+<meta property="og:description" content="Verify the provenance of any training pair. Full lineage, JellyScore, gates, and Merkle proof.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swarmandbee.ai/trace">
+<meta property="og:image" content="https://swarmandbee.ai/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Swarm & Bee Intelligence">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@swarmandbee">
+<meta name="twitter:title" content="Trace — Data Provenance | Swarm & Bee">
+<meta name="twitter:description" content="Verify provenance of any training pair. Merkle proof verification. Zero trust required.">
+<meta name="twitter:image" content="https://swarmandbee.ai/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://swarmandbee.ai/"},
+    {"@type": "ListItem", "position": 2, "name": "Trace", "item": "https://swarmandbee.ai/trace"}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050505;--surface:#0e0e0e;--surface-2:#141414;--border:#1e1e1e;
+  --primary:#f59e0b;--primary-dim:#b97a08;--accent:#fbbf24;
+  --text:#e8e8e8;--text-2:#a0a0a0;--text-3:#5a5a5a;
+  --green:#22c55e;--red:#ef4444;
+  --max-w:880px;--radius:8px;
+  --font:'DM Sans',system-ui,sans-serif;--heading:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:600;line-height:1.25}
+a{color:var(--primary);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,5,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--heading);font-size:1.2rem;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.logo span{color:var(--primary);margin:0 1px}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:.88rem}
+.nav-links a{color:var(--text-2);font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#050505!important;padding:6px 18px;border-radius:6px;font-weight:600;font-size:.84rem}
+.nav-cta:hover{background:var(--accent)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer}
+
+@media(max-width:720px){
+  .nav-links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;background:rgba(5,5,5,.96);padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .menu-toggle{display:block}
+}
+
+/* HEADER */
+.page-header{padding:140px 0 48px;text-align:center}
+.page-header h1{font-size:2.4rem;margin-bottom:16px;letter-spacing:-.03em}
+.page-header .subtitle{color:var(--text-2);font-size:1.05rem;max-width:640px;margin:0 auto;line-height:1.7}
+
+/* SEARCH */
+.search-box{display:flex;gap:10px;max-width:600px;margin:0 auto 48px}
+.search-input{flex:1;padding:14px 18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--mono);font-size:.88rem;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--primary-dim)}
+.search-input::placeholder{color:var(--text-3)}
+.search-btn{padding:14px 28px;border-radius:var(--radius);border:none;background:var(--primary);color:#050505;font-family:var(--heading);font-weight:600;font-size:.92rem;cursor:pointer;transition:background .2s;white-space:nowrap}
+.search-btn:hover{background:var(--accent)}
+.search-btn:disabled{opacity:.5;cursor:wait}
+.search-error{text-align:center;color:var(--red);font-size:.88rem;margin-top:-32px;margin-bottom:24px;min-height:1.2em}
+
+/* TRACE CARDS */
+.trace-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.trace-label{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:14px;font-weight:600}
+.trace-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.trace-row:last-of-type{border-bottom:none}
+.trace-key{font-size:.88rem;color:var(--text-2);min-width:140px}
+.trace-val{font-size:.88rem;color:var(--text);text-align:right}
+
+/* Tier badges */
+.tier-royal_jelly{color:var(--primary);font-weight:700}
+.tier-honey{color:var(--accent);font-weight:600}
+.tier-pollen{color:var(--text-2)}
+.tier-propolis{color:var(--text-3)}
+
+/* Gate pass/fail */
+.gate-pass{color:var(--green);font-family:var(--mono);font-weight:600;font-size:.82rem}
+.gate-fail{color:var(--red);font-family:var(--mono);font-weight:600;font-size:.82rem}
+
+/* Score bars */
+.score-bar{display:inline-block;width:100px;height:6px;background:var(--border);border-radius:3px;vertical-align:middle;margin-right:8px}
+.score-fill{display:block;height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+
+/* Merkle proof tree */
+.proof-tree{margin:12px 0;padding:12px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;overflow-x:auto}
+.proof-node{display:flex;align-items:center;gap:12px;padding:4px 0;font-family:var(--mono);font-size:.75rem}
+.proof-level{color:var(--primary);min-width:40px;font-weight:600}
+.proof-hash{color:var(--text-3);word-break:break-all}
+
+/* Verify */
+.verify-btn{margin-top:16px;padding:10px 24px;border-radius:var(--radius);border:1px solid var(--primary);background:transparent;color:var(--primary);font-family:var(--heading);font-weight:600;font-size:.88rem;cursor:pointer;transition:all .2s}
+.verify-btn:hover{background:rgba(245,158,11,.08)}
+.verify-pass{margin-top:12px;color:var(--green);font-family:var(--mono);font-size:.88rem;font-weight:600}
+.verify-fail{margin-top:12px;color:var(--red);font-family:var(--mono);font-size:.88rem;font-weight:600}
+
+/* HOW IT WORKS */
+.how-section{margin-top:64px;padding-top:64px;border-top:1px solid var(--border)}
+.how-section h2{font-size:1.4rem;text-align:center;margin-bottom:12px}
+.how-section>p{text-align:center;color:var(--text-2);font-size:.95rem;max-width:600px;margin:0 auto 36px;line-height:1.75}
+.chain{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:36px}
+.chain-node{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;font-family:var(--mono);font-size:.82rem;color:var(--text);text-align:center;min-width:100px}
+.chain-node.active{border-color:var(--primary-dim);color:var(--primary)}
+.chain-arrow{color:var(--text-3);font-size:1rem;padding:0 6px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:48px 0 36px;text-align:center;margin-top:80px}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:.85rem}
+.footer-links a{color:var(--text-2)}
+.footer-links a:hover{color:var(--primary)}
+.copyright{margin-top:20px;font-size:.78rem;color:var(--text-3)}
+
+@media(max-width:720px){
+  .page-header{padding:110px 0 36px}
+  .page-header h1{font-size:1.8rem}
+  .search-box{flex-direction:column}
+  .trace-row{flex-direction:column;align-items:flex-start;gap:4px}
+  .trace-val{text-align:left}
+  .chain{flex-direction:column}
+  .chain-arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">swarm<span>&amp;</span>bee</a>
+    <div class="nav-links" id="navLinks">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/trace" class="active">Trace</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/developers">Developers</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="/pricing" class="nav-cta">Get Started</a>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<main>
+
+<section class="page-header">
+  <div class="container">
+    <h1>Data Provenance Trace</h1>
+    <p class="subtitle">Verify any training pair. Full lineage chain, JellyScore breakdown, 6 deterministic gates, and cryptographic Merkle proof. Zero trust required.</p>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="search-box">
+    <input type="text" id="trace-input" class="search-input" placeholder="HIVE-AVI-abc123def456" autocomplete="off" spellcheck="false">
+    <button id="trace-btn" class="search-btn" onclick="lookupTrace()">Trace</button>
+  </div>
+  <p class="search-error" id="trace-error"></p>
+
+  <div id="trace-results"></div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <h2>The Provenance Chain</h2>
+    <p>Every pair in our system is traceable from source signal through scoring to batch registration. Each step is auditable and cryptographically sealed.</p>
+
+    <div class="chain">
+      <div class="chain-node">Signal</div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-node">Cook</div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-node active">JellyScore</div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-node">6 Gates</div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-node">Batch</div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-node active">Merkle Root</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:48px">
+      <div class="trace-card" style="margin:0">
+        <div class="trace-label">JellyScore</div>
+        <p style="font-size:.85rem;color:var(--text-2);line-height:1.65">5 weighted components: source confidence, gate integrity, reasoning depth, entropy health, fingerprint uniqueness. Deterministic. Reproducible.</p>
+      </div>
+      <div class="trace-card" style="margin:0">
+        <div class="trace-label">6 Gates</div>
+        <p style="font-size:.85rem;color:var(--text-2);line-height:1.65">JSON valid, output length, numeric verify, concept present, dedup, degenerate. Binary pass/fail. No opinions. Code that runs the same way every time.</p>
+      </div>
+      <div class="trace-card" style="margin:0">
+        <div class="trace-label">Merkle Proof</div>
+        <p style="font-size:.85rem;color:var(--text-2);line-height:1.65">SHA-256 fingerprint tree. Prove any pair is included in its batch without revealing the rest. Same algorithm as Bitcoin block headers.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="/datasets">Datasets</a>
+      <a href="/atlas">Atlas</a>
+      <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/developers">Developers</a>
+      <a href="/account">Account</a>
+      <a href="https://huggingface.co/SwarmandBee" target="_blank" rel="noopener noreferrer">HuggingFace</a>
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://github.com/SudoSuOps" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div style="margin-top:16px;font-size:0.82rem">
+      <a href="mailto:build@swarmandbee.com" style="color:var(--primary)">build@swarmandbee.com</a>
+    </div>
+    <div class="copyright">&copy; 2026 Swarm &amp; Bee Intelligence</div>
+  </div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/trace.js"></script>
+</body>
+</html>

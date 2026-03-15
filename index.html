@@ -300,6 +300,7 @@ footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers">Developers</a>
       <a href="/account">Account</a>
@@ -686,6 +687,7 @@ footer .copyright{margin-top:12px;font-size:0.72rem;opacity:0.4}
       <a href="/datasets">Datasets</a>
       <a href="/atlas">Atlas</a>
       <a href="/demand">Market Intel</a>
+      <a href="/trace">Trace</a>
       <a href="/pricing">Pricing</a>
       <a href="/developers">Developers</a>
       <a href="/account">Account</a>
@@ -731,6 +733,17 @@ async function handleSubscribe(e) {
   btn.disabled = false;
   return false;
 }
+</script>
+<script src="/js/api.js"></script>
+<script>
+(async function() {
+  try {
+    const s = await SB.ledger('/api/summary');
+    const statNums = document.querySelectorAll('.stat-bar .stat-num');
+    if (s.total_pairs && statNums[0]) statNums[0].textContent = SB.fmtNum(s.total_pairs);
+    if (s.domains && statNums[1]) statNums[1].textContent = s.domains.length + '+';
+  } catch { /* keep hardcoded fallback values */ }
+})();
 </script>
 </body>
 </html>
